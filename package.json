@@ -1,0 +1,38 @@
+{
+  "name": "js-download-status",
+  "version": "1.0.0",
+  "description": "Small lib for a cool download experience",
+  "main": "dist/js-download-status.js",
+  "scripts": {
+    "build": "webpack --env dev && webpack --env build",
+    "dev": "webpack --progress --colors --watch --env dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AleeeKoi/js-download-status.git"
+  },
+  "keywords": [
+    "donwload",
+    "status",
+    "downloader",
+    "file"
+  ],
+  "author": "Alessandro Pellizzari",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AleeeKoi/js-download-status/issues"
+  },
+  "homepage": "https://github.com/AleeeKoi/js-download-status#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-add-module-exports": "^1.0.0",
+    "eslint": "^5.12.0",
+    "eslint-loader": "^2.1.1",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.2.1"
+  }
+}
