@@ -8,6 +8,11 @@
 
 # JS File Downloader
 
+<p align="center">
+  <a href="https://www.npmjs.com/package/js-file-downloader"><img src="https://img.shields.io/npm/v/js-file-downloader.svg" alt="Version"></a>
+  <a href="https://www.npmjs.com/package/js-file-downloader"><img src="https://img.shields.io/npm/l/js-file-downloader.svg" alt="License"></a>
+</p>
+
 ## Introduction
 
 JS File Downloader is a simple no dependency library you will be able to download file from browser and show downloading status.
