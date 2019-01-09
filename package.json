@@ -5,7 +5,9 @@
   "main": "dist/js-download-status.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",
-    "dev": "webpack --progress --colors --watch --env dev"
+    "dev": "webpack --progress --colors --watch --env dev",
+    "test": "mocha --require @babel/register --colors ./test/*.js",
+    "test:watch": "mocha --require @babel/register --colors -w ./test/*.js"
   },
   "repository": {
     "type": "git",
@@ -27,11 +29,16 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-add-module-exports": "^1.0.0",
+    "chai": "^4.2.0",
     "eslint": "^5.12.0",
     "eslint-loader": "^2.1.1",
+    "jsdom": "^13.1.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^5.2.0",
     "webpack": "^4.28.1",
     "webpack-cli": "^3.2.1"
   }
