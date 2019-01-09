@@ -19,50 +19,52 @@ class Downloader {
    */
   constructor (customParams = {}) {
     this.params = Object.assign({}, defaultParams, customParams);
-    return new Promise(this.initDonwload);
+    this.link = this.createLink();
+    this.request = null;
+    return new Promise((resolve, reject) => {
+      this.initDonwload(resolve, reject);
+    });
   }
 
   initDonwload (resolve, reject) {
 
-    let link = this.createLink();
-
     // fallback for old browsers
-    if (!('download' in link) || this.isMobile()) {
-      link.target = '_blank';
-      link.href = this.params.url;
-      this.clickLink(link);
+    if (!('download' in this.link) || this.isMobile()) {
+      this.link.target = '_blank';
+      this.link.href = this.params.url;
+      this.clickLink();
       return resolve();
     }
 
-    let request = this.createRequest();
+    this.request = this.createRequest();
 
     if (!this.params.url) {
       return reject('Downloader error: url param not defined!');
     }
 
-    request.onload = () => {
+    this.request.onload = () => {
       try {
-        if (parseInt(request.status, 10) !== 200) {
-          throw downloadException(`status code [${request.status}]`);
+        if (parseInt(this.request.status, 10) !== 200) {
+          throw downloadException(`status code [${this.request.status}]`);
         }
-        this.startDownload(request, link);
-        resolve();
+        this.startDownload();
+        resolve(this);
       } catch (error) {
         reject(new Error(`Downloader error: ${error}`));
       }
     };
 
-    request.ontimeout = () => {
+    this.request.ontimeout = () => {
       reject(new Error('Downloader error: request timeout'));
     };
 
-    request.onerror = (e) => {
+    this.request.onerror = (e) => {
       reject(e);
     };
 
-    request.send();
+    this.request.send();
 
-    return request;
+    return this;
   }
 
   isMobile () {
@@ -83,13 +85,13 @@ class Downloader {
     return request;
   }
 
-  getFileName (request) {
+  getFileName () {
     // Forcing file name
     if (typeof this.params.filename === 'string') {
       return this.params.filename;
     }
     // Trying to get file name from response header
-    let content = request.getResponseHeader('Content-Disposition');
+    let content = this.request.getResponseHeader('Content-Disposition');
     let contentParts = [];
 
     if (content) {
@@ -107,10 +109,10 @@ class Downloader {
     return link;
   }
 
-  clickLink (link) {
+  clickLink () {
     let event = new MouseEvent('click');
 
-    link.dispatchEvent(event);
+    this.link.dispatchEvent(event);
   }
 
   getFile (response, fileName) {
@@ -127,9 +129,9 @@ class Downloader {
     return file;
   }
 
-  startDownload (request, link) {
-    let fileName = this.getFileName(request);
-    let file = this.getFile(request.response, fileName);
+  startDownload () {
+    let fileName = this.getFileName(this.request);
+    let file = this.getFile(this.request.response, fileName);
 
     // native IE
     if ('msSaveOrOpenBlob' in window.navigator) {
@@ -138,9 +140,10 @@ class Downloader {
 
     let objectUrl = window.URL.createObjectURL(file);
 
-    link.href = objectUrl;
-    link.download = fileName;
-    this.clickLink(link);
+    this.link.href = objectUrl;
+    this.link.download = fileName;
+    this.clickLink();
+
     setTimeout(() => {
       (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
     }, 1000 * 40);
