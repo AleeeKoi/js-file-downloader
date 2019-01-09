@@ -1,8 +1,8 @@
 {
-  "name": "js-download-status",
+  "name": "js-file-downloader",
   "version": "1.0.0",
   "description": "Small lib for a cool download experience",
-  "main": "dist/js-download-status.js",
+  "main": "dist/js-file-downloader.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
@@ -11,20 +11,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AleeeKoi/js-download-status.git"
+    "url": "git+https://github.com/AleeeKoi/js-file-downloader.git"
   },
   "keywords": [
     "donwload",
     "status",
     "downloader",
-    "file"
+    "file",
+    "javascript",
+    "client",
+    "browser"
   ],
   "author": "Alessandro Pellizzari",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/AleeeKoi/js-download-status/issues"
+    "url": "https://github.com/AleeeKoi/js-file-downloader/issues"
   },
-  "homepage": "https://github.com/AleeeKoi/js-download-status#readme",
+  "homepage": "https://github.com/AleeeKoi/js-file-downloader#readme",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",

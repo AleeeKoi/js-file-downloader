@@ -2,11 +2,11 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("js-download-status", [], factory);
+		define("js-file-downloader", [], factory);
 	else if(typeof exports === 'object')
-		exports["js-download-status"] = factory();
+		exports["js-file-downloader"] = factory();
 	else
-		root["js-download-status"] = factory();
+		root["js-file-downloader"] = factory();
 })(typeof self !== 'undefined' ? self : this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -147,58 +147,63 @@ function () {
    * @param {Object} customParams
    */
   function Downloader() {
+    var _this = this;
+
     var customParams = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     _classCallCheck(this, Downloader);
 
     this.params = Object.assign({}, defaultParams, customParams);
-    return new Promise(this.initDonwload);
+    this.link = this.createLink();
+    this.request = null;
+    return new Promise(function (resolve, reject) {
+      _this.initDonwload(resolve, reject);
+    });
   }
 
   _createClass(Downloader, [{
     key: "initDonwload",
     value: function initDonwload(resolve, reject) {
-      var _this = this;
+      var _this2 = this;
 
-      var link = this.createLink(); // fallback for old browsers
-
-      if (!('download' in link) || this.isMobile()) {
-        link.target = '_blank';
-        link.href = this.params.url;
-        this.clickLink(link);
+      // fallback for old browsers
+      if (!('download' in this.link) || this.isMobile()) {
+        this.link.target = '_blank';
+        this.link.href = this.params.url;
+        this.clickLink();
         return resolve();
       }
 
-      var request = this.createRequest();
+      this.request = this.createRequest();
 
       if (!this.params.url) {
         return reject('Downloader error: url param not defined!');
       }
 
-      request.onload = function () {
+      this.request.onload = function () {
         try {
-          if (parseInt(request.status, 10) !== 200) {
-            throw downloadException("status code [".concat(request.status, "]"));
+          if (parseInt(_this2.request.status, 10) !== 200) {
+            throw downloadException("status code [".concat(_this2.request.status, "]"));
           }
 
-          _this.startDownload(request, link);
+          _this2.startDownload();
 
-          resolve();
+          resolve(_this2);
         } catch (error) {
           reject(new Error("Downloader error: ".concat(error)));
         }
       };
 
-      request.ontimeout = function () {
+      this.request.ontimeout = function () {
         reject(new Error('Downloader error: request timeout'));
       };
 
-      request.onerror = function (e) {
+      this.request.onerror = function (e) {
         reject(e);
       };
 
-      request.send();
-      return request;
+      this.request.send();
+      return this;
     }
   }, {
     key: "isMobile",
@@ -223,14 +228,14 @@ function () {
     }
   }, {
     key: "getFileName",
-    value: function getFileName(request) {
+    value: function getFileName() {
       // Forcing file name
       if (typeof this.params.filename === 'string') {
         return this.params.filename;
       } // Trying to get file name from response header
 
 
-      var content = request.getResponseHeader('Content-Disposition');
+      var content = this.request.getResponseHeader('Content-Disposition');
       var contentParts = [];
 
       if (content) {
@@ -248,9 +253,9 @@ function () {
     }
   }, {
     key: "clickLink",
-    value: function clickLink(link) {
+    value: function clickLink() {
       var event = new MouseEvent('click');
-      link.dispatchEvent(event);
+      this.link.dispatchEvent(event);
     }
   }, {
     key: "getFile",
@@ -272,18 +277,18 @@ function () {
     }
   }, {
     key: "startDownload",
-    value: function startDownload(request, link) {
-      var fileName = this.getFileName(request);
-      var file = this.getFile(request.response, fileName); // native IE
+    value: function startDownload() {
+      var fileName = this.getFileName(this.request);
+      var file = this.getFile(this.request.response, fileName); // native IE
 
       if ('msSaveOrOpenBlob' in window.navigator) {
         return window.navigator.msSaveOrOpenBlob(file, fileName);
       }
 
       var objectUrl = window.URL.createObjectURL(file);
-      link.href = objectUrl;
-      link.download = fileName;
-      this.clickLink(link);
+      this.link.href = objectUrl;
+      this.link.download = fileName;
+      this.clickLink();
       setTimeout(function () {
         (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
       }, 1000 * 40);
@@ -300,4 +305,4 @@ module.exports = Downloader;
 
 /******/ });
 });
-//# sourceMappingURL=js-download-status.js.map
+//# sourceMappingURL=js-file-downloader.js.map

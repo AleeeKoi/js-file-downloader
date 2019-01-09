@@ -1,3 +1,12 @@
+/*!
+ * JS File Downloader v 1.0
+ * https://github.com/AleeeKoi/js-file-downloader
+ *
+ * Copyright Alessandro Pellizzari
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ */
+
 'use strict';
 
 const downloadException = require('./exception').downloadException;

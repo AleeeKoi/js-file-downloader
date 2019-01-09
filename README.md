@@ -6,15 +6,15 @@
 
 ---
 
-# JS Download Status
+# JS File Downloader
 
 ## Introduction
 
-JS Download Status is a simple no dependency library you will be able to download file from browser and show downloading status.
+JS File Downloader is a simple no dependency library you will be able to download file from browser and show downloading status.
 
 ### Browser Compatibility
 
-JS Download Status supports all browsers that are [ES5-compliant] (http://kangax.github.io/compat-table/es5/) (IE8 and below are not supported).
+JS File Downloader supports all browsers that are [ES5-compliant] (http://kangax.github.io/compat-table/es5/) (IE8 and below are not supported).
 
 ---
 
@@ -22,11 +22,11 @@ JS Download Status supports all browsers that are [ES5-compliant] (http://kangax
 
 With a package manager (**recomanded**): 
 ```js
-npm install js-download-status --save 
+npm install js-file-downloader --save 
 ```
 
 **Manually:**  
-Download this library from https://github.com/AleeeKoi/js-download-status/releases
+Download this library from https://github.com/AleeeKoi/js-file-downloader/releases
 
 ---
 
@@ -34,7 +34,7 @@ Download this library from https://github.com/AleeeKoi/js-download-status/releas
 
 ```js
 
-import Downloader from 'js-download-status';
+import Downloader from 'js-file-downloader';
 
 const fileUrl = 'http://...';
 
