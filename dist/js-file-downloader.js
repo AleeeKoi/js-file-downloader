@@ -120,6 +120,14 @@ module.exports.downloadException = downloadException;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+/*!
+ * JS File Downloader v 1.1.0
+ * https://github.com/AleeeKoi/js-file-downloader
+ *
+ * Copyright Alessandro Pellizzari
+ * Released under the MIT license
+ * http://opensource.org/licenses/MIT
+ */
 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -135,7 +143,7 @@ var defaultParams = {
   mobileDisabled: true
 };
 
-var Downloader =
+var jsFileDownloader =
 /*#__PURE__*/
 function () {
   /**
@@ -146,12 +154,12 @@ function () {
    * * {Function} process call on request event
    * @param {Object} customParams
    */
-  function Downloader() {
+  function jsFileDownloader() {
     var _this = this;
 
     var customParams = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-    _classCallCheck(this, Downloader);
+    _classCallCheck(this, jsFileDownloader);
 
     this.params = Object.assign({}, defaultParams, customParams);
     this.link = this.createLink();
@@ -161,7 +169,7 @@ function () {
     });
   }
 
-  _createClass(Downloader, [{
+  _createClass(jsFileDownloader, [{
     key: "initDonwload",
     value: function initDonwload(resolve, reject) {
       var _this2 = this;
@@ -254,7 +262,15 @@ function () {
   }, {
     key: "clickLink",
     value: function clickLink() {
-      var event = new MouseEvent('click');
+      var event;
+
+      try {
+        event = new MouseEvent('click');
+      } catch (e) {
+        event = document.createEvent('MouseEvent');
+        event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      }
+
       this.link.dispatchEvent(event);
     }
   }, {
@@ -296,10 +312,10 @@ function () {
     }
   }]);
 
-  return Downloader;
+  return jsFileDownloader;
 }();
 
-module.exports = Downloader;
+module.exports = jsFileDownloader;
 
 /***/ })
 
