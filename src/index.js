@@ -1,5 +1,5 @@
 /*!
- * JS File Downloader v 1.0
+ * JS File Downloader v 1.1.0
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -16,7 +16,7 @@ const defaultParams = {
   mobileDisabled: true
 };
 
-class Downloader {
+class jsFileDownloader {
 
   /**
    * You need to define a {String} "url" params and optionally others
@@ -119,7 +119,14 @@ class Downloader {
   }
 
   clickLink () {
-    let event = new MouseEvent('click');
+    let event;
+
+    try {
+      event = new MouseEvent('click');
+    } catch (e) {
+      event = document.createEvent('MouseEvent');
+      event.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+    }
 
     this.link.dispatchEvent(event);
   }
@@ -162,4 +169,4 @@ class Downloader {
 
 }
 
-module.exports = Downloader;
+module.exports = jsFileDownloader;

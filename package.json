@@ -1,11 +1,11 @@
 {
   "name": "js-file-downloader",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Small lib for a cool download experience",
   "main": "dist/js-file-downloader.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",
-    "dev": "webpack --progress --colors --watch --env dev",
+    "dev": "webpack --progress --colors --env dev",
     "test": "mocha --require @babel/register --colors ./test/*.js",
     "test:watch": "mocha --require @babel/register --colors -w ./test/*.js"
   },
