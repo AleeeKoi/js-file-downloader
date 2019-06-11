@@ -5,6 +5,10 @@ const libraryName = pkg.name;
 
 let plugins = [], outputFile, mode;
 
+const camelCased = function (s) {
+  return s.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+};
+
 if (env === 'build') {
   mode = 'production';
   outputFile = libraryName + '.min.js';
@@ -20,10 +24,10 @@ const config = {
   output: {
     path: __dirname + '/dist',
     filename: outputFile,
-    library: libraryName,
+    library: camelCased(libraryName),
     libraryTarget: 'umd',
     umdNamedDefine: true,
-    globalObject: "typeof self !== 'undefined' ? self : this"
+    globalObject: 'this'
   },
   module: {
     rules: [
