@@ -1,5 +1,5 @@
 /*!
- * JS File Downloader v 1.1.0
+ * JS File Downloader v 1.1.1
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -85,7 +85,6 @@ class jsFileDownloader {
 
     request.open('GET', this.params.url, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     request.responseType = 'arraybuffer';
     if (this.params.process && typeof this.params.process === 'function') {
       request.addEventListener('progress', this.params.process);
