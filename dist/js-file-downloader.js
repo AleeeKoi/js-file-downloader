@@ -2,12 +2,12 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("js-file-downloader", [], factory);
+		define("jsFileDownloader", [], factory);
 	else if(typeof exports === 'object')
-		exports["js-file-downloader"] = factory();
+		exports["jsFileDownloader"] = factory();
 	else
-		root["js-file-downloader"] = factory();
-})(typeof self !== 'undefined' ? self : this, function() {
+		root["jsFileDownloader"] = factory();
+})(this, function() {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.0
+ * JS File Downloader v 1.1.1
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -224,7 +224,6 @@ function () {
       var request = new XMLHttpRequest();
       request.open('GET', this.params.url, true);
       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
       request.responseType = 'arraybuffer';
 
       if (this.params.process && typeof this.params.process === 'function') {

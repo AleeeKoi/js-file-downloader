@@ -23,17 +23,12 @@ JS File Downloader supports all browsers that are [ES5-compliant] (http://kangax
 
 ---
 
-### Installing
+### Installing with package manager
 
 With a package manager (**recomanded**): 
 ```js
 npm install js-file-downloader --save 
 ```
-
-**Manually:**  
-Download this library from https://github.com/AleeeKoi/js-file-downloader/releases
-
----
 
 ### Basic usage
 
@@ -56,6 +51,25 @@ new Downloader({
 ```
 
 ---
+
+### Use without a package manager
+Download this library from https://github.com/AleeeKoi/js-file-downloader/releases
+```js
+<script src="/path/to/js-file-downloader.min.js"></script>
+<script>
+  // Then somewhere in your code
+  new jsFileDownloader({ url: 'http://alessandropellizzari.it/assets/img/og-image.jpg' })
+    .then(function () {
+      // Called when download ended
+    })
+    .catch(function (error) {
+      // Called when an error occurred
+    });
+</script>
+```
+
+---
+
 
 ### Options:
 
