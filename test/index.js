@@ -23,7 +23,7 @@ describe('Create an instance of Downloader', () => {
 
   before(() => {
     DownloaderPromise = new Downloader({
-      url: 'http://localhost/demo.jpg'
+      url: 'http://alessandropellizzari.it/assets/img/og-image.jpg'
     });
   });
 
