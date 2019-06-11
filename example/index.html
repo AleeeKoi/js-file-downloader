@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p>A file should be downloaded</p>
+  <script src="../dist/js-file-downloader.min.js"></script>
+  <script>
+    !function () {
+      new jsFileDownloader({ url: 'http://alessandropellizzari.it/assets/img/og-image.jpg' })
+        .then(function () {
+          alert('File downloaded');
+        });
+    } ();
+  </script>
+</body>
+</html>
