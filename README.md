@@ -107,3 +107,7 @@ Integer value (default 40000) defining how much ms attend before stop download a
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2019-present, Alessandro Pellizzari
+
+[alessandropellizzari.it](http://www.alessandropellizzari.it)
+
+[Wigi Solutions](https://www.wigi.solutions)
