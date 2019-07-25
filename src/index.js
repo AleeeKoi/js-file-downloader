@@ -1,5 +1,5 @@
 /*!
- * JS File Downloader v 1.1.1
+ * JS File Downloader v 1.1.2
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
