@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.4-beta.0
+ * JS File Downloader v 1.1.4-beta.1
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -225,7 +225,7 @@ function () {
       var request = new XMLHttpRequest();
       request.open('GET', this.params.url, true);
       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-      this.params.headers.foreEach(function (header) {
+      this.params.headers.forEach(function (header) {
         request.setRequestHeader(header.name, header.value);
       });
       request.responseType = 'arraybuffer';
