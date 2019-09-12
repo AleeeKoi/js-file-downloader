@@ -91,6 +91,18 @@ new Downloader({
   
 ```
 
+#### headers (of request)
+If you need to customize request header data you can pass an array of objects like following example:
+
+```js
+new Downloader({ 
+  url: '...',
+  headers: [
+    { name: 'Authorization', value: 'Bearer ABC123...' }
+  ]
+})
+```
+
 #### filename
 Setting this String you can force output file name
 

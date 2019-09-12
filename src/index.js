@@ -1,5 +1,5 @@
 /*!
- * JS File Downloader v 1.1.2
+ * JS File Downloader v ##package_version##
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -13,7 +13,8 @@ const downloadException = require('./exception').downloadException;
 
 const defaultParams = {
   timeout: 40000,
-  mobileDisabled: true
+  mobileDisabled: true,
+  headers: []
 };
 
 class jsFileDownloader {
@@ -85,6 +86,9 @@ class jsFileDownloader {
 
     request.open('GET', this.params.url, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    this.params.headers.foreEach(header => {
+      request.setRequestHeader(header.name, header.value);
+    });
     request.responseType = 'arraybuffer';
     if (this.params.process && typeof this.params.process === 'function') {
       request.addEventListener('progress', this.params.process);

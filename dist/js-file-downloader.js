@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.2
+ * JS File Downloader v 1.1.4-beta.0
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -140,7 +140,8 @@ var downloadException = __webpack_require__(/*! ./exception */ "./src/exception.
 
 var defaultParams = {
   timeout: 40000,
-  mobileDisabled: true
+  mobileDisabled: true,
+  headers: []
 };
 
 var jsFileDownloader =
@@ -224,6 +225,9 @@ function () {
       var request = new XMLHttpRequest();
       request.open('GET', this.params.url, true);
       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+      this.params.headers.foreEach(function (header) {
+        request.setRequestHeader(header.name, header.value);
+      });
       request.responseType = 'arraybuffer';
 
       if (this.params.process && typeof this.params.process === 'function') {

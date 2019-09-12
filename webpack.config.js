@@ -33,6 +33,14 @@ const config = {
     rules: [
       {
         test: /\.js$/,
+        loader: 'string-replace-loader',
+        options: {
+          search: '##package_version##',
+          replace: require("./package.json").version,
+        }
+      },
+      {
+        test: /\.js$/,
         loader: 'babel-loader',
         exclude: /(node_modules|bower_components)/
       },
@@ -40,7 +48,7 @@ const config = {
         test: /\.js$/,
         loader: 'eslint-loader',
         exclude: /node_modules/
-      }
+      },
     ]
   },
   resolve: {
