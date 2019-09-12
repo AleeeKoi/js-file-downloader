@@ -86,7 +86,7 @@ class jsFileDownloader {
 
     request.open('GET', this.params.url, true);
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-    this.params.headers.foreEach(header => {
+    this.params.headers.forEach(header => {
       request.setRequestHeader(header.name, header.value);
     });
     request.responseType = 'arraybuffer';
