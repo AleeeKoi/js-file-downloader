@@ -14,7 +14,9 @@ const downloadException = require('./exception').downloadException;
 const defaultParams = {
   timeout: 40000,
   mobileDisabled: true,
-  headers: []
+  headers: [],
+  forceDesktopMode: false,
+  autoStart: true
 };
 
 class jsFileDownloader {
@@ -31,6 +33,11 @@ class jsFileDownloader {
     this.params = Object.assign({}, defaultParams, customParams);
     this.link = this.createLink();
     this.request = null;
+
+    if (this.params.autoStart) return this.start();
+  }
+
+  start () {
     return new Promise((resolve, reject) => {
       this.initDonwload(resolve, reject);
     });
@@ -78,7 +85,8 @@ class jsFileDownloader {
   }
 
   isMobile () {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    return !this.params.forceDesktopMode 
+      && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
   createRequest () {
