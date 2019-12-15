@@ -131,7 +131,7 @@ const download = new Downloader({
 });
 
 try {
-  download.start();
+  await download.start();
 } catch (error) {
   // log the error
 }
