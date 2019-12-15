@@ -85,8 +85,8 @@ class jsFileDownloader {
   }
 
   isMobile () {
-    return !this.params.forceDesktopMode 
-      && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    return !this.params.forceDesktopMode && 
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
   createRequest () {
