@@ -37,7 +37,7 @@ class jsFileDownloader {
     if (this.params.autoStart) return this.start();
   }
 
-  get start() {
+  get start () {
     return new Promise((resolve, reject) => {
       this.initDonwload(resolve, reject);
     });
