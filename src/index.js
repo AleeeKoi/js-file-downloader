@@ -34,17 +34,20 @@ class jsFileDownloader {
     this.link = this.createLink();
     this.request = null;
 
-    if (this.params.autoStart) return this.start();
+    if (this.params.autoStart) return this.downloadFile();
   }
 
   get start () {
+    return this.downloadFile();
+  }
+
+  downloadFile () {
     return new Promise((resolve, reject) => {
       this.initDonwload(resolve, reject);
     });
   }
 
   initDonwload (resolve, reject) {
-
     // fallback for old browsers
     if (!('download' in this.link) || this.isMobile()) {
       this.link.target = '_blank';

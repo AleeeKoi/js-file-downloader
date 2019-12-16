@@ -165,13 +165,12 @@ function () {
     this.params = Object.assign({}, defaultParams, customParams);
     this.link = this.createLink();
     this.request = null;
-    this.start = this.startDownload();
-    if (this.params.autoStart) return this.startDownload();
+    if (this.params.autoStart) return this.downloadFile();
   }
 
   _createClass(jsFileDownloader, [{
-    key: "startDownload",
-    value: function startDownload() {
+    key: "downloadFile",
+    value: function downloadFile() {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
@@ -320,6 +319,11 @@ function () {
         (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
       }, 1000 * 40);
       return this;
+    }
+  }, {
+    key: "start",
+    get: function get() {
+      return this.downloadFile();
     }
   }]);
 
