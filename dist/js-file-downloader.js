@@ -165,12 +165,13 @@ function () {
     this.params = Object.assign({}, defaultParams, customParams);
     this.link = this.createLink();
     this.request = null;
-    if (this.params.autoStart) return this.start();
+    this.start = this.startDownload();
+    if (this.params.autoStart) return this.startDownload();
   }
 
   _createClass(jsFileDownloader, [{
-    key: "start",
-    value: function start() {
+    key: "startDownload",
+    value: function startDownload() {
       var _this = this;
 
       return new Promise(function (resolve, reject) {

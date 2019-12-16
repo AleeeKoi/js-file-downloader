@@ -33,11 +33,12 @@ class jsFileDownloader {
     this.params = Object.assign({}, defaultParams, customParams);
     this.link = this.createLink();
     this.request = null;
+    this.start = this.startDownload();
 
-    if (this.params.autoStart) return this.start();
+    if (this.params.autoStart) return this.startDownload();
   }
 
-  start () {
+  startDownload () {
     return new Promise((resolve, reject) => {
       this.initDonwload(resolve, reject);
     });
