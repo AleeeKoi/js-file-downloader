@@ -169,6 +169,11 @@ function () {
   }
 
   _createClass(jsFileDownloader, [{
+    key: "start",
+    value: function start() {
+      return this.downloadFile();
+    }
+  }, {
     key: "downloadFile",
     value: function downloadFile() {
       var _this = this;
@@ -319,11 +324,6 @@ function () {
         (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
       }, 1000 * 40);
       return this;
-    }
-  }, {
-    key: "start",
-    get: function get() {
-      return this.downloadFile();
     }
   }]);
 

@@ -37,7 +37,7 @@ class jsFileDownloader {
     if (this.params.autoStart) return this.downloadFile();
   }
 
-  get start () {
+  start () {
     return this.downloadFile();
   }
 

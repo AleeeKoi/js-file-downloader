@@ -130,11 +130,13 @@ const download = new Downloader({
   autoStart: false
 });
 
-try {
-  await download.start;
-} catch (error) {
-  // log the error
-}
+download.start()
+  .then(function(){
+      // success 
+  })
+  .catch(function(error){
+      // handle errors
+  });
 ```
 
 #### forceDesktopMode
