@@ -141,7 +141,9 @@ var downloadException = __webpack_require__(/*! ./exception */ "./src/exception.
 var defaultParams = {
   timeout: 40000,
   mobileDisabled: true,
-  headers: []
+  headers: [],
+  forceDesktopMode: false,
+  autoStart: true
 };
 
 var jsFileDownloader =
@@ -156,8 +158,6 @@ function () {
    * @param {Object} customParams
    */
   function jsFileDownloader() {
-    var _this = this;
-
     var customParams = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     _classCallCheck(this, jsFileDownloader);
@@ -165,12 +165,24 @@ function () {
     this.params = Object.assign({}, defaultParams, customParams);
     this.link = this.createLink();
     this.request = null;
-    return new Promise(function (resolve, reject) {
-      _this.initDonwload(resolve, reject);
-    });
+    if (this.params.autoStart) return this.downloadFile();
   }
 
   _createClass(jsFileDownloader, [{
+    key: "start",
+    value: function start() {
+      return this.downloadFile();
+    }
+  }, {
+    key: "downloadFile",
+    value: function downloadFile() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _this.initDonwload(resolve, reject);
+      });
+    }
+  }, {
     key: "initDonwload",
     value: function initDonwload(resolve, reject) {
       var _this2 = this;
@@ -217,7 +229,7 @@ function () {
   }, {
     key: "isMobile",
     value: function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      return !this.params.forceDesktopMode && /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
   }, {
     key: "createRequest",

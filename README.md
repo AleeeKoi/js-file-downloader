@@ -112,6 +112,41 @@ Boolean value (default false) to enable/disable library on mobile browsers.
 #### timeout (ms)
 Integer value (default 40000) defining how much ms attend before stop download action.
 
+#### autoStart
+Boolean value (default true) to enable/disable automatically starting the download. When the value is `true` the constructor returns a `Promise`, however when it's set to false, the constructor doesn't return anything and the download can be started by calling the `start()` method on the object.
+
+Example with `autoStart` set to `true`
+```js
+new Downloader({ 
+  url: '...',
+  autoStart: true
+})
+```
+
+Example with `autoStart` set to `false`
+```js
+const download = new Downloader({ 
+  url: '...',
+  autoStart: false
+});
+
+download.start()
+  .then(function(){
+      // success 
+  })
+  .catch(function(error){
+      // handle errors
+  });
+```
+
+#### forceDesktopMode
+Boolean value (default false) to force desktop mode even on mobile devices for downloading files.
+```js
+new Downloader({ 
+  url: '...',
+  forceDesktopMode: true
+})
+```
 --- 
 
 ### License
