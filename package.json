@@ -29,10 +29,10 @@
   },
   "homepage": "https://github.com/AleeeKoi/js-file-downloader#readme",
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/register": "^7.5.5",
+    "@babel/cli": "^7.7.5",
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/register": "^7.7.4",
     "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.6",
     "babel-plugin-add-module-exports": "^1.0.2",
@@ -43,7 +43,7 @@
     "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
     "string-replace-loader": "^2.2.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "webpack": "^4.41.3",
+    "webpack-cli": "^3.3.10"
   }
 }
