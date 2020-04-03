@@ -118,10 +118,10 @@ class jsFileDownloader {
     let contentParts = [];
 
     if (content) {
-      contentParts = content.replace(/\s|"|'/g, '').match(/(filename=)([\s\S]+)/);
+      contentParts = content.match(/filename="([\s\S]+)"/);
     }
-    return contentParts.length >= 2 ?
-      contentParts[2] :
+    return contentParts.length >= 1 ?
+      contentParts[1] :
       this.params.url.split('/').pop().split('?')[0];
   }
 
