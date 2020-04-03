@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.5
+ * JS File Downloader v 1.1.7
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -262,10 +262,10 @@ function () {
       var contentParts = [];
 
       if (content) {
-        contentParts = content.match(/filename="([\s\S]+)"/);
+        contentParts = content.replace(/["']/g, '').match(/filename\*?=([^;]+)/);
       }
 
-      return contentParts.length >= 1 ? contentParts[1] : this.params.url.split('/').pop().split('?')[0];
+      return contentParts && contentParts.length >= 1 ? contentParts[1] : this.params.url.split('/').pop().split('?')[0];
     }
   }, {
     key: "createLink",
