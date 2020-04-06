@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.7
+ * JS File Downloader v 1.1.6
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -146,9 +146,7 @@ var defaultParams = {
   autoStart: true
 };
 
-var jsFileDownloader =
-/*#__PURE__*/
-function () {
+var jsFileDownloader = /*#__PURE__*/function () {
   /**
    * You need to define a {String} "url" params and optionally others
    * * {String} filename
