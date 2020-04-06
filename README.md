@@ -156,5 +156,3 @@ new Downloader({
 Copyright (c) 2019-present, Alessandro Pellizzari
 
 [alessandropellizzari.it](http://www.alessandropellizzari.it)
-
-[Wigi Solutions](https://www.wigi.solutions)
