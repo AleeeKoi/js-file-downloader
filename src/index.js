@@ -16,7 +16,8 @@ const defaultParams = {
   mobileDisabled: true,
   headers: [],
   forceDesktopMode: false,
-  autoStart: true
+  autoStart: true,
+  includeCredentials: false
 };
 
 class jsFileDownloader {
@@ -96,6 +97,7 @@ class jsFileDownloader {
     let request = new XMLHttpRequest();
 
     request.open('GET', this.params.url, true);
+    if (this.params.includeCredentials) request.withCredentials = true;
     request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     this.params.headers.forEach(header => {
       request.setRequestHeader(header.name, header.value);
