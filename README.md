@@ -147,6 +147,15 @@ new Downloader({
   forceDesktopMode: true
 })
 ```
+
+#### withCredentials
+This is a Boolean that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting withCredentials has no effect on same-site requests.
+```js
+new Downloader({ 
+  url: '...',
+  withCredentials: true
+})
+```
 --- 
 
 ### License

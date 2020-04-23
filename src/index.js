@@ -16,7 +16,8 @@ const defaultParams = {
   mobileDisabled: true,
   headers: [],
   forceDesktopMode: false,
-  autoStart: true
+  autoStart: true,
+  includeCredentials: false
 };
 
 class jsFileDownloader {
@@ -105,6 +106,7 @@ class jsFileDownloader {
       request.addEventListener('progress', this.params.process);
     }
     request.timeout = this.params.timeout;
+    request.withCredentials = this.params.includeCredentials;
     return request;
   }
 
