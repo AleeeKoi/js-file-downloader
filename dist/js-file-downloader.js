@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.6
+ * JS File Downloader v 1.1.7
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -143,7 +143,8 @@ var defaultParams = {
   mobileDisabled: true,
   headers: [],
   forceDesktopMode: false,
-  autoStart: true
+  autoStart: true,
+  includeCredentials: false
 };
 
 var jsFileDownloader = /*#__PURE__*/function () {
@@ -245,6 +246,7 @@ var jsFileDownloader = /*#__PURE__*/function () {
       }
 
       request.timeout = this.params.timeout;
+      request.withCredentials = this.params.includeCredentials;
       return request;
     }
   }, {
