@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.7
+ * JS File Downloader v 1.1.8
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -144,7 +144,8 @@ var defaultParams = {
   headers: [],
   forceDesktopMode: false,
   autoStart: true,
-  includeCredentials: false
+  includeCredentials: false,
+  method: 'GET'
 };
 
 var jsFileDownloader = /*#__PURE__*/function () {
@@ -234,7 +235,7 @@ var jsFileDownloader = /*#__PURE__*/function () {
     key: "createRequest",
     value: function createRequest() {
       var request = new XMLHttpRequest();
-      request.open('GET', this.params.url, true);
+      request.open(this.params.method, this.params.url, true);
       request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
       this.params.headers.forEach(function (header) {
         request.setRequestHeader(header.name, header.value);
