@@ -156,6 +156,18 @@ new Downloader({
   withCredentials: true
 })
 ```
+
+#### method
+The HTTP request method to use, such as "GET", "POST", "PUT", etc. (default "GET")
+Ignored for non-HTTP(S) URLs.
+
+```js
+new Downloader({ 
+  url: '...',
+  method: 'POST'
+})
+```
+
 --- 
 
 ### License
