@@ -23,7 +23,7 @@ describe('Create an instance of Downloader', () => {
 
   before(() => {
     DownloaderPromise = new Downloader({
-      url: 'http://github.alessandropellizzari.it/test/apedesign-bg.png'
+      url: 'https://github.alessandropellizzari.it/test/apedesign-bg.png'
     });
   });
 
@@ -61,7 +61,7 @@ describe('Passing nameCallback', () => {
 
   before(() => {
     DownloaderPromise = new Downloader({
-      url: 'http://github.alessandropellizzari.it/test/apedesign-bg.png',
+      url: 'https://github.alessandropellizzari.it/test/apedesign-bg.png',
       nameCallback: name => `test-${name}`
     });
   });
