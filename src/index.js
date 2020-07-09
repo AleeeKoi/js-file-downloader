@@ -18,7 +18,8 @@ const defaultParams = {
   forceDesktopMode: false,
   autoStart: true,
   includeCredentials: false,
-  method: 'GET'
+  method: 'GET',
+  nameCallback: name => name
 };
 
 class jsFileDownloader {
@@ -124,9 +125,11 @@ class jsFileDownloader {
       contentParts = content.replace(/["']/g, '').match(/filename\*?=([^;]+)/);
     }
 
-    return contentParts && contentParts.length >= 1 ?
+    const extractedName = contentParts && contentParts.length >= 1 ?
       contentParts[1] :
       this.params.url.split('/').pop().split('?')[0];
+
+    return this.params.nameCallback(extractedName);
   }
 
   createLink () {

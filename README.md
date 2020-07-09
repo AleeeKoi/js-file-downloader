@@ -168,6 +168,18 @@ new Downloader({
 })
 ```
 
+#### nameCallback
+You could pass a callback to customize final name, the function receive as 1st argument the name automatically extracted.
+
+```js
+new Downloader({ 
+  url: '...',
+  nameCallback: function(name) {
+    return 'i-am-prefix-' + name;
+  }
+})
+```
+
 --- 
 
 ### License
