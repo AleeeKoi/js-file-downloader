@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="http://alessandropellizzari.it" target="_blank" rel="noopener noreferrer">
-    <img height="150" src="http://alessandropellizzari.it/github/alessandro_pellizzari.png" alt="AP Logo" />
+  <a href="https://apedesign.net/" target="_blank" rel="noopener noreferrer">
+    <img height="150" src="https://apedesign.net/img/ape-icons/ape-logo-512.png" alt="APE Design" />
   </a>
 </p>
 
@@ -58,7 +58,7 @@ Download this library from https://github.com/AleeeKoi/js-file-downloader/releas
 <script src="/path/to/js-file-downloader.min.js"></script>
 <script>
   // Then somewhere in your code
-  new jsFileDownloader({ url: 'http://alessandropellizzari.it/assets/img/og-image.jpg' })
+  new jsFileDownloader({ url: 'http://github.alessandropellizzari.it/test/apedesign-bg.png' })
     .then(function () {
       // Called when download ended
     })
@@ -188,4 +188,4 @@ new Downloader({
 
 Copyright (c) 2019-present, Alessandro Pellizzari
 
-[alessandropellizzari.it](http://www.alessandropellizzari.it)
+[apedesign.net](https://apedesign.net/)
