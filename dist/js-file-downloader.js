@@ -121,7 +121,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.10
+ * JS File Downloader v 1.1.11
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -314,7 +314,7 @@ var jsFileDownloader = /*#__PURE__*/function () {
   }, {
     key: "startDownload",
     value: function startDownload() {
-      var fileName = this.getFileName(this.request);
+      var fileName = this.getFileName();
       var file = this.getFile(this.request.response, fileName); // native IE
 
       if ('msSaveOrOpenBlob' in window.navigator) {
