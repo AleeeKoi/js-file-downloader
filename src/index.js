@@ -167,7 +167,7 @@ class jsFileDownloader {
   }
 
   startDownload () {
-    let fileName = this.getFileName(this.request);
+    let fileName = this.getFileName();
     let file = this.getFile(this.request.response, fileName);
 
     // native IE
