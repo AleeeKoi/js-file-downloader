@@ -38,6 +38,8 @@ class jsFileDownloader {
     this.request = null;
 
     if (this.params.autoStart) return this.downloadFile();
+
+    return this;
   }
 
   start () {
@@ -66,15 +68,12 @@ class jsFileDownloader {
     }
 
     this.request.onload = () => {
-      try {
-        if (parseInt(this.request.status, 10) !== 200) {
-          throw downloadException(`status code [${this.request.status}]`);
-        }
-        this.startDownload();
-        resolve(this);
-      } catch (error) {
-        reject(new Error(`Downloader error: ${error}`));
+      if (parseInt(this.request.status, 10) !== 200) {
+        // eslint-disable-next-line new-cap
+        return reject(new downloadException(`status code [${this.request.status}]`, this.request));
       }
+      this.startDownload();
+      return resolve(this);
     };
 
     this.request.ontimeout = () => {

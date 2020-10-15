@@ -1,6 +1,5 @@
-
-import chai from 'chai';
-import Downloader from '../src/index';
+import chai, { expect } from 'chai';
+import Downloader from '../dist/js-file-downloader.min';
 
 chai.expect();
 chai.should();
@@ -13,9 +12,6 @@ if (typeof window.URL.createObjectURL === 'undefined') {
 if (typeof window.URL.revokeObjectURL === 'undefined') {
   Object.defineProperty(window.URL, 'revokeObjectURL', { value: noOp });
 }
-
-// const expect = chai.expect;
-// const should = chai.should;
 
 describe('Create an instance of Downloader', () => {
 
@@ -84,6 +80,37 @@ describe('Passing nameCallback', () => {
 
       })
       .catch(e => { done(e); });
+  });
+
+});
+
+describe('Rejection test', () => {
+
+  let DownloaderPromise;
+
+  before(() => {
+    DownloaderPromise = new Downloader({
+      url: 'https://github.alessandropellizzari.it/test/no-exists.png'
+    });
+  });
+
+  it('should be rejected', done => {
+
+    DownloaderPromise
+      .catch(e => {
+
+        describe('Checking exception', () => {
+
+          it('should be and exception', () => {
+            e.name.should.be.a('string');
+            e.name.should.be.equal('downloadException');
+            e.message.should.be.a('string');
+            e.request.should.be.a('XMLHttpRequest');
+          });
+        });
+
+        done();
+      });
   });
 
 });
