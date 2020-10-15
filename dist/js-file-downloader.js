@@ -157,7 +157,7 @@ module.exports.downloadException = /*#__PURE__*/function (_Error) {
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.12
+ * JS File Downloader v 1.1.13
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
