@@ -24,8 +24,8 @@ declare class downloadException extends Error {
 
 export = jsFileDownloader;
 declare class jsFileDownloader {
-  constructor(customParams: JsFileDownloaderProps): Promise<undefined,downloadException> | JsFileDownloader;
-  start(): Promise<undefined,downloadException>;
+  constructor(customParams: JsFileDownloaderProps);
+  start(): Promise<undefined>;
   params: JsFileDownloaderProps;
   link: HTMLAnchorElement;
   request: XMLHttpRequest;
