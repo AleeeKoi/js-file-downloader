@@ -13,7 +13,7 @@
   <a href="https://www.npmjs.com/package/js-file-downloader"><img src="https://img.shields.io/npm/l/js-file-downloader.svg" alt="License"></a>
 </p>
 
-## **Please remember to star this github repo if you like it. Thank you!**
+## **🌟Please remember to star this github repo if you like it. Thank you! ❤️**
 
 ## Introduction
 
@@ -36,11 +36,11 @@ npm install js-file-downloader --save
 
 ```js
 
-import Downloader from 'js-file-downloader';
+import JsFileDownloader from 'js-file-downloader';
 
 const fileUrl = 'http://...';
 
-new Downloader({ 
+new JsFileDownloader({ 
     url: fileUrl
   })
   .then(function () {
@@ -86,7 +86,7 @@ function process (event) {
   // what to do ...
 };
 
-new Downloader({ 
+new JsFileDownloader({ 
   url: '...',
   process: process
 })
@@ -97,7 +97,7 @@ new Downloader({
 If you need to customize request header data you can pass an array of objects like following example:
 
 ```js
-new Downloader({ 
+new JsFileDownloader({ 
   url: '...',
   headers: [
     { name: 'Authorization', value: 'Bearer ABC123...' }
@@ -119,7 +119,7 @@ Boolean value (default true) to enable/disable automatically starting the downlo
 
 Example with `autoStart` set to `true`
 ```js
-new Downloader({ 
+new JsFileDownloader({ 
   url: '...',
   autoStart: true
 })
@@ -127,7 +127,7 @@ new Downloader({
 
 Example with `autoStart` set to `false`
 ```js
-const download = new Downloader({ 
+const download = new JsFileDownloader({ 
   url: '...',
   autoStart: false
 });
@@ -144,7 +144,7 @@ download.start()
 #### forceDesktopMode
 Boolean value (default false) to force desktop mode even on mobile devices for downloading files.
 ```js
-new Downloader({ 
+new JsFileDownloader({ 
   url: '...',
   forceDesktopMode: true
 })
@@ -153,7 +153,7 @@ new Downloader({
 #### withCredentials
 This is a Boolean that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting withCredentials has no effect on same-site requests.
 ```js
-new Downloader({ 
+new JsFileDownloader({ 
   url: '...',
   withCredentials: true
 })
@@ -164,7 +164,7 @@ The HTTP request method to use, such as "GET", "POST", "PUT", etc. (default "GET
 Ignored for non-HTTP(S) URLs.
 
 ```js
-new Downloader({ 
+new JsFileDownloader({ 
   url: '...',
   method: 'POST'
 })
@@ -174,7 +174,7 @@ new Downloader({
 You could pass a callback to customize final name, the function receive as 1st argument the name automatically extracted.
 
 ```js
-new Downloader({ 
+new JsFileDownloader({ 
   url: '...',
   nameCallback: function(name) {
     return 'i-am-prefix-' + name;

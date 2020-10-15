@@ -103,12 +103,48 @@ return /******/ (function(modules) { // webpackBootstrap
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-function downloadException(message) {
-  this.message = message;
-  this.name = 'downloadException';
-}
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-module.exports.downloadException = downloadException;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _wrapNativeSuper(Class) { var _cache = typeof Map === "function" ? new Map() : undefined; _wrapNativeSuper = function _wrapNativeSuper(Class) { if (Class === null || !_isNativeFunction(Class)) return Class; if (typeof Class !== "function") { throw new TypeError("Super expression must either be null or a function"); } if (typeof _cache !== "undefined") { if (_cache.has(Class)) return _cache.get(Class); _cache.set(Class, Wrapper); } function Wrapper() { return _construct(Class, arguments, _getPrototypeOf(this).constructor); } Wrapper.prototype = Object.create(Class.prototype, { constructor: { value: Wrapper, enumerable: false, writable: true, configurable: true } }); return _setPrototypeOf(Wrapper, Class); }; return _wrapNativeSuper(Class); }
+
+function _construct(Parent, args, Class) { if (_isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _isNativeFunction(fn) { return Function.toString.call(fn).indexOf("[native code]") !== -1; }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+module.exports.downloadException = /*#__PURE__*/function (_Error) {
+  _inherits(downloadException, _Error);
+
+  var _super = _createSuper(downloadException);
+
+  function downloadException(message, request) {
+    var _this;
+
+    _classCallCheck(this, downloadException);
+
+    _this = _super.call(this, "Downloader error: ".concat(message));
+    _this.request = request;
+    _this.name = 'downloadException';
+    return _this;
+  }
+
+  return downloadException;
+}( /*#__PURE__*/_wrapNativeSuper(Error));
 
 /***/ }),
 
@@ -121,7 +157,7 @@ module.exports.downloadException = downloadException;
 
 "use strict";
 /*!
- * JS File Downloader v 1.1.11
+ * JS File Downloader v 1.1.12
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -169,6 +205,7 @@ var jsFileDownloader = /*#__PURE__*/function () {
     this.link = this.createLink();
     this.request = null;
     if (this.params.autoStart) return this.downloadFile();
+    return this;
   }
 
   _createClass(jsFileDownloader, [{
@@ -205,17 +242,14 @@ var jsFileDownloader = /*#__PURE__*/function () {
       }
 
       this.request.onload = function () {
-        try {
-          if (parseInt(_this2.request.status, 10) !== 200) {
-            throw downloadException("status code [".concat(_this2.request.status, "]"));
-          }
-
-          _this2.startDownload();
-
-          resolve(_this2);
-        } catch (error) {
-          reject(new Error("Downloader error: ".concat(error)));
+        if (parseInt(_this2.request.status, 10) !== 200) {
+          // eslint-disable-next-line new-cap
+          return reject(new downloadException("status code [".concat(_this2.request.status, "]"), _this2.request));
         }
+
+        _this2.startDownload();
+
+        return resolve(_this2);
       };
 
       this.request.ontimeout = function () {
