@@ -103,7 +103,7 @@ describe('Rejection test', () => {
 
           it('should be and exception', () => {
             e.name.should.be.a('string');
-            e.name.should.be.equal('downloadException');
+            e.name.should.be.equal('DownloadException');
             e.message.should.be.a('string');
             e.request.should.be.a('XMLHttpRequest');
           });

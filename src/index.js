@@ -9,7 +9,7 @@
 
 'use strict';
 
-const downloadException = require('./exception').downloadException;
+const DownloadException = require('./exception').DownloadException;
 
 const defaultParams = {
   timeout: 40000,
@@ -48,11 +48,11 @@ class jsFileDownloader {
 
   downloadFile () {
     return new Promise((resolve, reject) => {
-      this.initDonwload(resolve, reject);
+      this.initDownload(resolve, reject);
     });
   }
 
-  initDonwload (resolve, reject) {
+  initDownload (resolve, reject) {
     // fallback for old browsers
     if (!('download' in this.link) || this.isMobile()) {
       this.link.target = '_blank';
@@ -69,8 +69,7 @@ class jsFileDownloader {
 
     this.request.onload = () => {
       if (parseInt(this.request.status, 10) !== 200) {
-        // eslint-disable-next-line new-cap
-        return reject(new downloadException(`status code [${this.request.status}]`, this.request));
+        return reject(new DownloadException(`status code [${this.request.status}]`, this.request));
       }
       this.startDownload();
       return resolve(this);

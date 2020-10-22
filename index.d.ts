@@ -16,7 +16,7 @@ interface JsFileDownloaderProps extends JsFileDownloaderDefaultProps {
   filename?: string;
 }
 
-declare class downloadException extends Error {
+declare class DownloadException extends Error {
   constructor(message: any, request: any);
   name: string;
   request: XMLHttpRequest;
