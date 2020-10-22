@@ -150,12 +150,12 @@ new JsFileDownloader({
 })
 ```
 
-#### withCredentials
-This is a Boolean that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting withCredentials has no effect on same-site requests.
+#### includeCredentials
+This is a Boolean that indicates whether or not cross-site Access-Control requests should be made using credentials such as cookies, authorization headers or TLS client certificates. Setting includeCredentials has no effect on same-site requests.
 ```js
 new JsFileDownloader({ 
   url: '...',
-  withCredentials: true
+  includeCredentials: true
 })
 ```
 
