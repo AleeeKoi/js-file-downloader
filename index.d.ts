@@ -4,7 +4,9 @@ interface JsFileDownloaderDefaultProps {
   mobileDisabled?: boolean;
   headers?: [{ name: string, value: string }];
   forceDesktopMode?: boolean;
+  /** @deprecated use withCredentials instead */
   includeCredentials?: boolean;
+  withCredentials?: boolean;
   method?: 'GET' | 'POST';
   process?: (event: ProgressEvent) => undefined;
   nameCallback?: (name: string) => string;
