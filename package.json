@@ -1,6 +1,6 @@
 {
   "name": "js-file-downloader",
-  "version": "1.1.15",
+  "version": "1.1.16",
   "description": "Small lib for a cool download experience",
   "main": "dist/js-file-downloader.js",
   "types": "index.d.ts",
@@ -30,21 +30,21 @@
   },
   "homepage": "https://github.com/AleeeKoi/js-file-downloader#readme",
   "devDependencies": {
-    "@babel/cli": "^7.11.5",
-    "@babel/core": "^7.11.5",
-    "@babel/preset-env": "^7.11.5",
-    "@babel/register": "^7.11.5",
+    "@babel/cli": "^7.13.10",
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/register": "^7.13.8",
     "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
-    "babel-plugin-add-module-exports": "^1.0.2",
-    "chai": "^4.2.0",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-add-module-exports": "^1.0.4",
+    "chai": "^4.3.3",
     "eslint": "^5.16.0",
     "eslint-loader": "^2.2.1",
     "jsdom": "^13.2.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^5.2.0",
     "string-replace-loader": "^2.3.0",
-    "webpack": "^4.44.1",
+    "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"
   }
 }
