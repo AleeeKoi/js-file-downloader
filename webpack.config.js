@@ -26,7 +26,7 @@ const config = {
     filename: outputFile,
     library: camelCased(libraryName),
     libraryTarget: 'umd',
-    umdNamedDefine: true,
+    libraryExport: 'default',
     globalObject: 'this'
   },
   module: {

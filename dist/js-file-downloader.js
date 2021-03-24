@@ -2,7 +2,7 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define("jsFileDownloader", [], factory);
+		define([], factory);
 	else if(typeof exports === 'object')
 		exports["jsFileDownloader"] = factory();
 	else
@@ -163,7 +163,7 @@ var downloadException = /*#__PURE__*/function (_Error) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./exception */ "./src/exception.js");
 /*!
- * JS File Downloader v 1.1.17
+ * JS File Downloader v 1.1.18
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -374,6 +374,6 @@ var JsFileDownloader = /*#__PURE__*/function () {
 
 /***/ })
 
-/******/ });
+/******/ })["default"];
 });
 //# sourceMappingURL=js-file-downloader.js.map
