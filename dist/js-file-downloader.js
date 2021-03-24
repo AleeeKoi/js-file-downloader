@@ -100,9 +100,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************!*\
   !*** ./src/exception.js ***!
   \**************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: downloadException */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadException", function() { return downloadException; });
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -127,7 +130,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-module.exports.downloadException = /*#__PURE__*/function (_Error) {
+var downloadException = /*#__PURE__*/function (_Error) {
   _inherits(downloadException, _Error);
 
   var _super = _createSuper(downloadException);
@@ -145,6 +148,7 @@ module.exports.downloadException = /*#__PURE__*/function (_Error) {
 
   return downloadException;
 }( /*#__PURE__*/_wrapNativeSuper(Error));
+;
 
 /***/ }),
 
@@ -152,12 +156,14 @@ module.exports.downloadException = /*#__PURE__*/function (_Error) {
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./exception */ "./src/exception.js");
 /*!
- * JS File Downloader v 1.1.16
+ * JS File Downloader v 1.1.17
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -172,11 +178,9 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var downloadException = __webpack_require__(/*! ./exception */ "./src/exception.js").downloadException;
 
-var defaultParams = {
+var DEFAULT_PARAMS = {
   timeout: 40000,
-  mobileDisabled: true,
   headers: [],
   forceDesktopMode: false,
   autoStart: true,
@@ -187,28 +191,25 @@ var defaultParams = {
   }
 };
 
-var jsFileDownloader = /*#__PURE__*/function () {
+var JsFileDownloader = /*#__PURE__*/function () {
   /**
-   * You need to define a {String} "url" params and optionally others
-   * * {String} filename
-   * * {Int} timeout in ms
-   * * {Boolean} mobileDisabled
-   * * {Function} process call on request event
+   * Create a new JsFileDownloader instance
+   * You need to define a {String} "url" params and other
    * @param {Object} customParams
    */
-  function jsFileDownloader() {
+  function JsFileDownloader() {
     var customParams = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-    _classCallCheck(this, jsFileDownloader);
+    _classCallCheck(this, JsFileDownloader);
 
-    this.params = Object.assign({}, defaultParams, customParams);
+    this.params = Object.assign({}, DEFAULT_PARAMS, customParams);
     this.link = this.createLink();
     this.request = null;
     if (this.params.autoStart) return this.downloadFile();
     return this;
   }
 
-  _createClass(jsFileDownloader, [{
+  _createClass(JsFileDownloader, [{
     key: "start",
     value: function start() {
       return this.downloadFile();
@@ -244,7 +245,7 @@ var jsFileDownloader = /*#__PURE__*/function () {
       this.request.onload = function () {
         if (parseInt(_this2.request.status, 10) !== 200) {
           // eslint-disable-next-line new-cap
-          return reject(new downloadException("status code [".concat(_this2.request.status, "]"), _this2.request));
+          return reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]("status code [".concat(_this2.request.status, "]"), _this2.request));
         }
 
         _this2.startDownload();
@@ -366,10 +367,10 @@ var jsFileDownloader = /*#__PURE__*/function () {
     }
   }]);
 
-  return jsFileDownloader;
+  return JsFileDownloader;
 }();
 
-module.exports = jsFileDownloader;
+/* harmony default export */ __webpack_exports__["default"] = (JsFileDownloader);
 
 /***/ })
 

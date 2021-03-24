@@ -108,9 +108,6 @@ new JsFileDownloader({
 #### filename
 Setting this String you can force output file name
 
-#### mobileDisabled
-Boolean value (default false) to enable/disable library on mobile browsers.
-
 #### timeout (ms)
 Integer value (default 40000) defining how much ms attend before stop download action.
 

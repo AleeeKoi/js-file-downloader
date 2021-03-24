@@ -36,7 +36,7 @@ const config = {
         loader: 'string-replace-loader',
         options: {
           search: '##package_version##',
-          replace: require("./package.json").version,
+          replace: require('./package.json').version
         }
       },
       {
@@ -48,7 +48,7 @@ const config = {
         test: /\.js$/,
         loader: 'eslint-loader',
         exclude: /node_modules/
-      },
+      }
     ]
   },
   resolve: {

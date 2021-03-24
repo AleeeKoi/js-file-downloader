@@ -1,34 +1,28 @@
+declare module 'js-file-downloader' {
+  export interface OptionalParams {
+    timeout?: number;
+    headers?: [{ name: string, value: string }];
+    forceDesktopMode?: boolean;
+    withCredentials?: boolean;
+    method?: 'GET' | 'POST';
+    process?: (event: ProgressEvent) => undefined;
+    nameCallback?: (name: string) => string;
+    autoStart?: boolean;
+    filename?: string;
+  }
 
-interface JsFileDownloaderDefaultProps {
-  timeout?: number;
-  mobileDisabled?: boolean;
-  headers?: [{ name: string, value: string }];
-  forceDesktopMode?: boolean;
-  /** @deprecated use withCredentials instead */
-  includeCredentials?: boolean;
-  withCredentials?: boolean;
-  method?: 'GET' | 'POST';
-  process?: (event: ProgressEvent) => undefined;
-  nameCallback?: (name: string) => string;
-  autoStart?: boolean;
-}
+  type Params = OptionalParams & { url: string };
+  interface JsFileDownloaderBase {
+    start(): Promise<void>;
+    params: Params;
+    link: HTMLAnchorElement;
+    request: XMLHttpRequest;
+  }
+  interface JsFileDownloaderContructor {
+    new (data?: Params): JsFileDownloaderBase;
+  }
 
-interface JsFileDownloaderProps extends JsFileDownloaderDefaultProps {
-  url: string;
-  filename?: string;
-}
+  const JsFileDownloader: JsFileDownloaderContructor;
 
-declare class downloadException extends Error {
-  constructor(message: any, request: any);
-  name: string;
-  request: XMLHttpRequest;
-}
-
-export = jsFileDownloader;
-declare class jsFileDownloader {
-  constructor(customParams: JsFileDownloaderProps);
-  start(): Promise<undefined>;
-  params: JsFileDownloaderProps;
-  link: HTMLAnchorElement;
-  request: XMLHttpRequest;
+  export default JsFileDownloader;
 }

@@ -9,11 +9,10 @@
 
 'use strict';
 
-const downloadException = require('./exception').downloadException;
+import { downloadException } from './exception';
 
-const defaultParams = {
+const DEFAULT_PARAMS = {
   timeout: 40000,
-  mobileDisabled: true,
   headers: [],
   forceDesktopMode: false,
   autoStart: true,
@@ -22,18 +21,15 @@ const defaultParams = {
   nameCallback: name => name
 };
 
-class jsFileDownloader {
+class JsFileDownloader {
 
   /**
-   * You need to define a {String} "url" params and optionally others
-   * * {String} filename
-   * * {Int} timeout in ms
-   * * {Boolean} mobileDisabled
-   * * {Function} process call on request event
+   * Create a new JsFileDownloader instance
+   * You need to define a {String} "url" params and other
    * @param {Object} customParams
    */
   constructor (customParams = {}) {
-    this.params = Object.assign({}, defaultParams, customParams);
+    this.params = Object.assign({}, DEFAULT_PARAMS, customParams);
     this.link = this.createLink();
     this.request = null;
 
@@ -186,7 +182,6 @@ class jsFileDownloader {
 
     return this;
   }
-
 }
 
-module.exports = jsFileDownloader;
+export default JsFileDownloader;

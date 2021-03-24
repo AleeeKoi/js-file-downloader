@@ -1,4 +1,4 @@
-import chai, { expect } from 'chai';
+import chai from 'chai';
 import Downloader from '../dist/js-file-downloader.min';
 
 chai.expect();
