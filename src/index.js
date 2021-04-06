@@ -60,7 +60,8 @@ class JsFileDownloader {
     this.request = this.createRequest();
 
     if (!this.params.url) {
-      return reject('Downloader error: url param not defined!');
+      // eslint-disable-next-line new-cap
+      return reject(new downloadException('url param not defined!', this.request));
     }
 
     this.request.onload = () => {
@@ -73,11 +74,13 @@ class JsFileDownloader {
     };
 
     this.request.ontimeout = () => {
-      reject(new Error('Downloader error: request timeout'));
+      // eslint-disable-next-line new-cap
+      reject(new downloadException('request timeout', this.request));
     };
 
-    this.request.onerror = (e) => {
-      reject(e);
+    this.request.onerror = () => {
+      // eslint-disable-next-line new-cap
+      reject(new downloadException('network error', this.request));
     };
 
     this.request.send();
