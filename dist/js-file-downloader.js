@@ -239,7 +239,8 @@ var JsFileDownloader = /*#__PURE__*/function () {
       this.request = this.createRequest();
 
       if (!this.params.url) {
-        return reject('Downloader error: url param not defined!');
+        // eslint-disable-next-line new-cap
+        return reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]('url param not defined!', this.request));
       }
 
       this.request.onload = function () {
@@ -254,11 +255,13 @@ var JsFileDownloader = /*#__PURE__*/function () {
       };
 
       this.request.ontimeout = function () {
-        reject(new Error('Downloader error: request timeout'));
+        // eslint-disable-next-line new-cap
+        reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]('request timeout', _this2.request));
       };
 
-      this.request.onerror = function (e) {
-        reject(e);
+      this.request.onerror = function () {
+        // eslint-disable-next-line new-cap
+        reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]('network error', _this2.request));
       };
 
       this.request.send();
