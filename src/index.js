@@ -9,7 +9,7 @@
 
 'use strict';
 
-import { downloadException } from './exception';
+import { DownloadException } from './exception';
 
 const DEFAULT_PARAMS = {
   timeout: 40000,
@@ -60,27 +60,23 @@ class JsFileDownloader {
     this.request = this.createRequest();
 
     if (!this.params.url) {
-      // eslint-disable-next-line new-cap
-      return reject(new downloadException('url param not defined!', this.request));
+      return reject(new DownloadException('url param not defined!', this.request));
     }
 
     this.request.onload = () => {
       if (parseInt(this.request.status, 10) !== 200) {
-        // eslint-disable-next-line new-cap
-        return reject(new downloadException(`status code [${this.request.status}]`, this.request));
+        return reject(new DownloadException(`status code [${this.request.status}]`, this.request));
       }
       this.startDownload();
       return resolve(this);
     };
 
     this.request.ontimeout = () => {
-      // eslint-disable-next-line new-cap
-      reject(new downloadException('request timeout', this.request));
+      reject(new DownloadException('request timeout', this.request));
     };
 
     this.request.onerror = () => {
-      // eslint-disable-next-line new-cap
-      reject(new downloadException('network error', this.request));
+      reject(new DownloadException('network error', this.request));
     };
 
     this.request.send();
