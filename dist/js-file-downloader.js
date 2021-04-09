@@ -100,11 +100,12 @@ return /******/ (function(modules) { // webpackBootstrap
 /*!**************************!*\
   !*** ./src/exception.js ***!
   \**************************/
-/*! exports provided: downloadException */
+/*! exports provided: DownloadException, downloadException */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DownloadException", function() { return DownloadException; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadException", function() { return downloadException; });
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -130,25 +131,30 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var downloadException = /*#__PURE__*/function (_Error) {
-  _inherits(downloadException, _Error);
+var DownloadException = /*#__PURE__*/function (_Error) {
+  _inherits(DownloadException, _Error);
 
-  var _super = _createSuper(downloadException);
+  var _super = _createSuper(DownloadException);
 
-  function downloadException(message, request) {
+  function DownloadException(message, request) {
     var _this;
 
-    _classCallCheck(this, downloadException);
+    _classCallCheck(this, DownloadException);
 
     _this = _super.call(this, "Downloader error: ".concat(message));
     _this.request = request;
-    _this.name = 'downloadException';
+    _this.name = 'DownloadException';
     return _this;
   }
 
-  return downloadException;
+  return DownloadException;
 }( /*#__PURE__*/_wrapNativeSuper(Error));
 ;
+/**
+ * @deprecated use DownloadException instead, it will be removed in next releases!
+ */
+
+var downloadException = DownloadException;
 
 /***/ }),
 
@@ -163,7 +169,7 @@ var downloadException = /*#__PURE__*/function (_Error) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./exception */ "./src/exception.js");
 /*!
- * JS File Downloader v 1.1.18
+ * JS File Downloader v 1.1.19
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -239,14 +245,12 @@ var JsFileDownloader = /*#__PURE__*/function () {
       this.request = this.createRequest();
 
       if (!this.params.url) {
-        // eslint-disable-next-line new-cap
-        return reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]('url param not defined!', this.request));
+        return reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["DownloadException"]('url param not defined!', this.request));
       }
 
       this.request.onload = function () {
         if (parseInt(_this2.request.status, 10) !== 200) {
-          // eslint-disable-next-line new-cap
-          return reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]("status code [".concat(_this2.request.status, "]"), _this2.request));
+          return reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["DownloadException"]("status code [".concat(_this2.request.status, "]"), _this2.request));
         }
 
         _this2.startDownload();
@@ -255,13 +259,11 @@ var JsFileDownloader = /*#__PURE__*/function () {
       };
 
       this.request.ontimeout = function () {
-        // eslint-disable-next-line new-cap
-        reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]('request timeout', _this2.request));
+        reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["DownloadException"]('request timeout', _this2.request));
       };
 
       this.request.onerror = function () {
-        // eslint-disable-next-line new-cap
-        reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["downloadException"]('network error', _this2.request));
+        reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["DownloadException"]('network error', _this2.request));
       };
 
       this.request.send();
