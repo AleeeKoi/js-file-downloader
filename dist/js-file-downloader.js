@@ -169,7 +169,7 @@ var downloadException = DownloadException;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./exception */ "./src/exception.js");
 /*!
- * JS File Downloader v 1.1.19
+ * JS File Downloader v 1.1.20
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -194,7 +194,8 @@ var DEFAULT_PARAMS = {
   method: 'GET',
   nameCallback: function nameCallback(name) {
     return name;
-  }
+  },
+  contentType: 'application/x-www-form-urlencoded'
 };
 
 var JsFileDownloader = /*#__PURE__*/function () {
@@ -279,7 +280,11 @@ var JsFileDownloader = /*#__PURE__*/function () {
     value: function createRequest() {
       var request = new XMLHttpRequest();
       request.open(this.params.method, this.params.url, true);
-      request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+      if (this.params.contentType !== false) {
+        request.setRequestHeader('Content-type', this.params.contentType);
+      }
+
       this.params.headers.forEach(function (header) {
         request.setRequestHeader(header.name, header.value);
       });
