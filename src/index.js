@@ -18,7 +18,8 @@ const DEFAULT_PARAMS = {
   autoStart: true,
   withCredentials: false,
   method: 'GET',
-  nameCallback: name => name
+  nameCallback: name => name,
+  contentType: 'application/x-www-form-urlencoded'
 };
 
 class JsFileDownloader {
@@ -93,7 +94,9 @@ class JsFileDownloader {
     let request = new XMLHttpRequest();
 
     request.open(this.params.method, this.params.url, true);
-    request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    if (this.params.contentType !== false) {
+      request.setRequestHeader('Content-type', this.params.contentType);
+    }
     this.params.headers.forEach(header => {
       request.setRequestHeader(header.name, header.value);
     });

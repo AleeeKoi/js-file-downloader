@@ -9,6 +9,7 @@ declare module 'js-file-downloader' {
     nameCallback?: (name: string) => string;
     autoStart?: boolean;
     filename?: string;
+    contentType?: false | string;
   }
 
   type Params = OptionalParams & { url: string };

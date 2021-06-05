@@ -179,6 +179,17 @@ new JsFileDownloader({
 })
 ```
 
+#### contentType
+Setting this property you can customize the content type in the heade request, default is 'application/x-www-form-urlencoded'
+If you set this property as false, the library doesn't set it.
+
+```js
+new JsFileDownloader({ 
+  url: '...',
+  contentType: 'multipart/form-data; boundary=something' // or false to unset it
+})
+```
+
 --- 
 
 ### License
