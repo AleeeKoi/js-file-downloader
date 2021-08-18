@@ -196,7 +196,8 @@ var DEFAULT_PARAMS = {
     return name;
   },
   contentType: 'application/x-www-form-urlencoded',
-  body: null
+  body: null,
+  nativeFallbackOnError: false
 };
 
 var JsFileDownloader = /*#__PURE__*/function () {
@@ -236,11 +237,16 @@ var JsFileDownloader = /*#__PURE__*/function () {
     value: function initDonwload(resolve, reject) {
       var _this2 = this;
 
-      // fallback for old browsers
+      var fallback = function fallback() {
+        _this2.link.target = '_blank';
+        _this2.link.href = _this2.params.url;
+
+        _this2.clickLink();
+      }; // fallback for old browsers
+
+
       if (!('download' in this.link) || this.isMobile()) {
-        this.link.target = '_blank';
-        this.link.href = this.params.url;
-        this.clickLink();
+        fallback();
         return resolve();
       }
 
@@ -265,7 +271,12 @@ var JsFileDownloader = /*#__PURE__*/function () {
       };
 
       this.request.onerror = function () {
-        reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["DownloadException"]('network error', _this2.request));
+        if (_this2.params.nativeFallbackOnError) {
+          fallback();
+          resolve(_this2);
+        } else {
+          reject(new _exception__WEBPACK_IMPORTED_MODULE_0__["DownloadException"]('network error', _this2.request));
+        }
       };
 
       this.request.send(this.params.body);

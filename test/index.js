@@ -51,6 +51,36 @@ describe('Create an instance of Downloader', () => {
 
 });
 
+describe('Fallback istance', () => {
+
+  let DownloaderPromise;
+
+  before(() => {
+    DownloaderPromise = new Downloader({
+      url: 'https://apedesign.net/favicon.ico',
+      nativeFallbackOnError: true
+    });
+  });
+
+  it('should fail and fallback to default download', done => {
+    DownloaderPromise
+      .then(DL => {
+
+        done();
+
+        describe('Checking link', () => {
+          it('should have _blank target', () => {
+            DL.link.should.have.property('target');
+            DL.link.target.should.equal('_blank');
+          });
+        });
+
+      })
+      .catch(e => { done(e); });
+  });
+
+});
+
 describe('Passing nameCallback', () => {
 
   let DownloaderPromise;

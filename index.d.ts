@@ -10,7 +10,8 @@ declare module 'js-file-downloader' {
     autoStart?: boolean;
     filename?: string;
     contentType?: false | string;
-    body?: Document | BodyInit | null
+    body?: Document | BodyInit | null;
+    nativeFallbackOnError?: boolean;
   }
 
   type Params = OptionalParams & { url: string };

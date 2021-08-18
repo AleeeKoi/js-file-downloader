@@ -20,7 +20,8 @@ const DEFAULT_PARAMS = {
   method: 'GET',
   nameCallback: name => name,
   contentType: 'application/x-www-form-urlencoded',
-  body: null
+  body: null,
+  nativeFallbackOnError: false
 };
 
 class JsFileDownloader {
@@ -51,11 +52,16 @@ class JsFileDownloader {
   }
 
   initDonwload (resolve, reject) {
-    // fallback for old browsers
-    if (!('download' in this.link) || this.isMobile()) {
+
+    const fallback = () => {
       this.link.target = '_blank';
       this.link.href = this.params.url;
       this.clickLink();
+    };
+
+    // fallback for old browsers
+    if (!('download' in this.link) || this.isMobile()) {
+      fallback();
       return resolve();
     }
 
@@ -78,7 +84,12 @@ class JsFileDownloader {
     };
 
     this.request.onerror = () => {
-      reject(new DownloadException('network error', this.request));
+      if (this.params.nativeFallbackOnError) {
+        fallback();
+        resolve(this);
+      } else {
+        reject(new DownloadException('network error', this.request));
+      }
     };
 
     this.request.send(this.params.body);

@@ -192,6 +192,18 @@ new JsFileDownloader({
 
 --- 
 
+#### nativeFallbackOnError
+By setting this property to true (default is false) when error occours the download will fallback to the default behavior opening a new tab.
+
+```js
+new JsFileDownloader({ 
+  url: '...',
+  nativeFallbackOnError: true
+})
+```
+
+--- 
+
 #### body
 By setting this property you can customize the body content sent with the request. Default value is `null` (nothing is sent), `Document` or `BodyInit` value can be set.
 
@@ -201,9 +213,6 @@ new JsFileDownloader({
   body: 'The body as a string'
 })
 ```
-
---- 
-
 ### License
 
 [MIT](http://opensource.org/licenses/MIT)
