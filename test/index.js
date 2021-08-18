@@ -19,7 +19,7 @@ describe('Create an instance of Downloader', () => {
 
   before(() => {
     DownloaderPromise = new Downloader({
-      url: 'https://github.alessandropellizzari.it/test/apedesign-bg.png'
+      url: 'https://cdn.apedesign.net/github/logo.png'
     });
   });
 
@@ -57,7 +57,7 @@ describe('Fallback istance', () => {
 
   before(() => {
     DownloaderPromise = new Downloader({
-      url: 'https://apedesign.net/favicon.ico',
+      url: 'https://cdn.apedesign.net/github/pixel.png',
       nativeFallbackOnError: true
     });
   });
@@ -87,7 +87,7 @@ describe('Passing nameCallback', () => {
 
   before(() => {
     DownloaderPromise = new Downloader({
-      url: 'https://github.alessandropellizzari.it/test/apedesign-bg.png',
+      url: 'https://cdn.apedesign.net/github/logo.png',
       nameCallback: name => `test-${name}`
     });
   });
@@ -103,7 +103,7 @@ describe('Passing nameCallback', () => {
           it('should have a name starting with "test-"', () => {
             DL.link.should.have.property('download');
             DL.link.download.should.be.a('string');
-            DL.link.download.should.equal('test-apedesign-bg.png');
+            DL.link.download.should.equal('test-logo.png');
           });
 
         });
@@ -120,7 +120,7 @@ describe('Rejection test', () => {
 
   before(() => {
     DownloaderPromise = new Downloader({
-      url: 'https://github.alessandropellizzari.it/test/no-exists.png'
+      url: 'https://cdn.apedesign.net/github/none.png'
     });
   });
 

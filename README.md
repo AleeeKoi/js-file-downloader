@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://apedesign.net/" target="_blank" rel="noopener noreferrer">
-    <img height="150" src="https://apedesign.net/img/ape-icons/ape-logo-512.png" alt="APE Design" />
+    <img height="150" src="https://cdn.apedesign.net/github/logo.png" alt="APE Design" />
   </a>
 </p>
 
