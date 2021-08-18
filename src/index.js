@@ -19,7 +19,8 @@ const DEFAULT_PARAMS = {
   withCredentials: false,
   method: 'GET',
   nameCallback: name => name,
-  contentType: 'application/x-www-form-urlencoded'
+  contentType: 'application/x-www-form-urlencoded',
+  body: null
 };
 
 class JsFileDownloader {
@@ -80,7 +81,7 @@ class JsFileDownloader {
       reject(new DownloadException('network error', this.request));
     };
 
-    this.request.send();
+    this.request.send(this.params.body);
 
     return this;
   }

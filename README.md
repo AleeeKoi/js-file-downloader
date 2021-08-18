@@ -192,6 +192,18 @@ new JsFileDownloader({
 
 --- 
 
+#### body
+By setting this property you can customize the body content sent with the request. Default value is `null` (nothing is sent), `Document` or `BodyInit` value can be set.
+
+```js
+new JsFileDownloader({ 
+  url: '...',
+  body: 'The body as a string'
+})
+```
+
+--- 
+
 ### License
 
 [MIT](http://opensource.org/licenses/MIT)
