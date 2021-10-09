@@ -1,7 +1,7 @@
 import chai from 'chai';
 import Downloader from '../dist/js-file-downloader.min';
 
-chai.expect();
+const expect = chai.expect;
 chai.should();
 
 function noOp () { }
@@ -110,6 +110,37 @@ describe('Passing nameCallback', () => {
 
       })
       .catch(e => { done(e); });
+  });
+
+});
+
+describe('Passing onloadstart', () => {
+
+  let DownloaderPromise;
+  let loadingStarted = false;
+
+  before(() => {
+    DownloaderPromise = new Downloader({
+      url: 'https://cdn.apedesign.net/github/logo.png',
+      onloadstart: () => loadingStarted = true
+    });
+  });
+
+  it('should not be rejected', done => {
+    DownloaderPromise
+        .then(DL => {
+
+          done();
+
+          describe('Checking if loadstart listener has been called', () => {
+
+            it('"loadingStarted" flag should be set to true', () => {
+              expect(loadingStarted).to.equal(true);
+            });
+
+          });
+        })
+        .catch(e => { done(e); });
   });
 
 });
