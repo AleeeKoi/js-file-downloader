@@ -10,6 +10,7 @@
 'use strict';
 
 import { DownloadException } from './exception';
+import {fileSignatures} from './signatures';
 
 const DEFAULT_PARAMS = {
   timeout: 40000,
@@ -218,37 +219,41 @@ class JsFileDownloader {
   }
 
   getFile (response, fileName) {
-    let file = null;
-    let options = { type: 'application/octet-stream' };
+    return this.getContentType(new Blob([response])).then(type => {
+      let file = null;
+      let options = { type: type};
 
-    try {
-      file = new File([response], fileName, options);
-    } catch (e) {
-      file = new Blob([response], options);
-      file.name = fileName;
-      file.lastModifiedDate = new Date();
-    }
-    return file;
+      try {
+        file = new File([response], fileName, options);
+      } catch (e) {
+        file = new Blob([response], options);
+        file.name = fileName;
+        file.lastModifiedDate = new Date();
+      }
+      return file;
+    });
   }
 
   startDownload () {
     let fileName = this.getFileName();
-    let file = this.getFile(this.request.response, fileName);
+    this.getFile(this.request.response, fileName).then(file => {
+      // native IE
+      if ('msSaveOrOpenBlob' in window.navigator) {
+        return window.navigator.msSaveOrOpenBlob(file, fileName);
+      }
 
-    // native IE
-    if ('msSaveOrOpenBlob' in window.navigator) {
-      return window.navigator.msSaveOrOpenBlob(file, fileName);
-    }
+      let objectUrl = window.URL.createObjectURL(file);
 
-    let objectUrl = window.URL.createObjectURL(file);
+      this.link.href = objectUrl;
+      this.link.download = fileName;
+      this.clickLink();
 
-    this.link.href = objectUrl;
-    this.link.download = fileName;
-    this.clickLink();
+      setTimeout(() => {
+        (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
+      }, 1000 * 40);
 
-    setTimeout(() => {
-      (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
-    }, 1000 * 40);
+      return file;
+    });
 
     return this;
   }
