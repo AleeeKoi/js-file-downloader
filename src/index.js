@@ -21,7 +21,8 @@ const DEFAULT_PARAMS = {
   nameCallback: name => name,
   contentType: 'application/x-www-form-urlencoded',
   body: null,
-  nativeFallbackOnError: false
+  nativeFallbackOnError: false,
+  contentTypeDetermination: false
 };
 
 class JsFileDownloader {

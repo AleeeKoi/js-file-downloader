@@ -13,6 +13,8 @@ declare module 'js-file-downloader' {
     body?: Document | BodyInit | null;
     nativeFallbackOnError?: boolean;
     onloadstart?: () => void;
+    contentTypeDetermination?: false | 'header' | 'signature' | 'full';
+    customFileSignatures?: { [key: string]: string };
   }
 
   type Params = OptionalParams & { url: string };
