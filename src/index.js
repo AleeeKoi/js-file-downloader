@@ -144,6 +144,58 @@ class JsFileDownloader {
     return this.params.nameCallback(extractedName);
   }
 
+  getContentTypeFromFileSignature (file) {
+    let signatures = Object.assign({}, fileSignatures, this.params.customFileSignatures);
+
+    return new Promise((resolve, reject) => {
+      let reader = new FileReader();
+      let first4BytesOfFile = file.slice(0, 4);
+
+      reader.onloadend = function (evt) {
+        if (evt.target.readyState === FileReader.DONE) {
+          let uint = new Uint8Array(evt.target.result);
+          let bytes = [];
+          uint.forEach((byte) => {
+            bytes.push(byte.toString(16));
+          });
+          let hex = bytes.join('').toUpperCase();
+          resolve(signatures[hex]);
+        }
+      };
+
+      reader.onerror = reject;
+
+      reader.readAsArrayBuffer(first4BytesOfFile);
+    });
+  }
+
+  getContentTypeFromResponseHeader () {
+    return this.request.getResponseHeader('content-type');
+  }
+
+  getContentType (file) {
+    return new Promise((resolve) => {
+      let defaultContentType = 'application/octet-stream';
+
+      if (typeof this.params.contentTypeDetermination === 'string') {
+        if (this.params.contentTypeDetermination === 'header') {
+          resolve(this.getContentTypeFromResponseHeader() ?? defaultContentType);
+        } else if (this.params.contentTypeDetermination === 'signature') {
+          this.getContentTypeFromFileSignature(file)
+            .then(signatureContentType => resolve(signatureContentType ?? defaultContentType));
+        } else if (this.params.contentTypeDetermination === 'full') {
+          let headerContentType = this.getContentTypeFromResponseHeader();
+          this.getContentTypeFromFileSignature(file)
+            .then(signatureContentType => resolve((signatureContentType ?? headerContentType) ?? defaultContentType));
+        } else {
+          resolve(defaultContentType);
+        }
+      } else {
+        resolve(defaultContentType);
+      }
+    });
+  }
+
   createLink () {
     let link = document.createElement('a');
 
