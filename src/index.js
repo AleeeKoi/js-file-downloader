@@ -116,6 +116,9 @@ class JsFileDownloader {
     if (this.params.process && typeof this.params.process === 'function') {
       request.addEventListener('progress', this.params.process);
     }
+    if (this.params.onloadstart && typeof this.params.onloadstart === 'function') {
+      request.onloadstart = this.params.onloadstart;
+    }
     request.timeout = this.params.timeout;
     request.withCredentials = !!this.params.withCredentials || !!this.params.includeCredentials;
     return request;

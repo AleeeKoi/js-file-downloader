@@ -93,6 +93,22 @@ new JsFileDownloader({
   
 ```
 
+#### onloadstart ('loadstart' event listener)
+A function to call when a 'loadstart' event is triggered.
+
+```js
+
+function onloadstart () {
+  // what to do ...
+}
+
+new JsFileDownloader({ 
+  url: '...',
+  onloadstart
+})
+  
+```
+
 #### headers (of request)
 If you need to customize request header data you can pass an array of objects like following example:
 
