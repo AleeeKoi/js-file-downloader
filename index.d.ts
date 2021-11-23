@@ -23,7 +23,8 @@ declare module 'js-file-downloader' {
     request: XMLHttpRequest;
   }
   interface JsFileDownloaderContructor {
-    new (data?: Params): JsFileDownloaderBase;
+    new (data?: Params & { autoStart: false }): JsFileDownloaderBase;
+    new (data?: Params): Promise<void>;
   }
 
   const JsFileDownloader: JsFileDownloaderContructor;
