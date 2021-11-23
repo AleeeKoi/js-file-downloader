@@ -169,7 +169,7 @@ var downloadException = DownloadException;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./exception */ "./src/exception.js");
 /*!
- * JS File Downloader v 1.1.22
+ * JS File Downloader v 1.1.23
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -229,12 +229,12 @@ var JsFileDownloader = /*#__PURE__*/function () {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
-        _this.initDonwload(resolve, reject);
+        _this.initDownload(resolve, reject);
       });
     }
   }, {
-    key: "initDonwload",
-    value: function initDonwload(resolve, reject) {
+    key: "initDownload",
+    value: function initDownload(resolve, reject) {
       var _this2 = this;
 
       var fallback = function fallback() {
