@@ -169,7 +169,7 @@ var downloadException = DownloadException;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _exception__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./exception */ "./src/exception.js");
 /*!
- * JS File Downloader v 1.1.21
+ * JS File Downloader v 1.1.22
  * https://github.com/AleeeKoi/js-file-downloader
  *
  * Copyright Alessandro Pellizzari
@@ -304,6 +304,10 @@ var JsFileDownloader = /*#__PURE__*/function () {
 
       if (this.params.process && typeof this.params.process === 'function') {
         request.addEventListener('progress', this.params.process);
+      }
+
+      if (this.params.onloadstart && typeof this.params.onloadstart === 'function') {
+        request.onloadstart = this.params.onloadstart;
       }
 
       request.timeout = this.params.timeout;
