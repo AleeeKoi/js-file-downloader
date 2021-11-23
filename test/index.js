@@ -122,25 +122,25 @@ describe('Passing onloadstart', () => {
   before(() => {
     DownloaderPromise = new Downloader({
       url: 'https://cdn.apedesign.net/github/logo.png',
-      onloadstart: () => loadingStarted = true
+      onloadstart () { loadingStarted = true; }
     });
   });
 
   it('should not be rejected', done => {
     DownloaderPromise
-        .then(DL => {
+      .then(DL => {
 
-          done();
+        done();
 
-          describe('Checking if loadstart listener has been called', () => {
+        describe('Checking if loadstart listener has been called', () => {
 
-            it('"loadingStarted" flag should be set to true', () => {
-              expect(loadingStarted).to.equal(true);
-            });
-
+          it('"loadingStarted" flag should be set to true', () => {
+            expect(loadingStarted).to.equal(true);
           });
-        })
-        .catch(e => { done(e); });
+
+        });
+      })
+      .catch(e => { done(e); });
   });
 
 });
