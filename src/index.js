@@ -47,11 +47,11 @@ class JsFileDownloader {
 
   downloadFile () {
     return new Promise((resolve, reject) => {
-      this.initDonwload(resolve, reject);
+      this.initDownload(resolve, reject);
     });
   }
 
-  initDonwload (resolve, reject) {
+  initDownload (resolve, reject) {
 
     const fallback = () => {
       this.link.target = '_blank';
