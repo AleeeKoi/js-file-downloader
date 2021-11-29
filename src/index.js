@@ -153,7 +153,7 @@ class JsFileDownloader {
       let reader = new FileReader();
       let first4BytesOfFile = file.slice(0, 4);
 
-      reader.onloadend = function (evt) {
+      reader.onloadend = (evt) => {
         if (evt.target.readyState === FileReader.DONE) {
           // Since an array buffer is just a generic way to represent a binary buffer
           // we need to create a TypedArray, in this case an Uint8Array
