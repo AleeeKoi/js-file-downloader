@@ -155,9 +155,12 @@ class JsFileDownloader {
 
       reader.onloadend = function (evt) {
         if (evt.target.readyState === FileReader.DONE) {
+          // Since an array buffer is just a generic way to represent a binary buffer
+          // we need to create a TypedArray, in this case an Uint8Array
           let uint = new Uint8Array(evt.target.result);
           let bytes = [];
           uint.forEach((byte) => {
+            // transform every byte to hexadecimal
             bytes.push(byte.toString(16));
           });
           let hex = bytes.join('').toUpperCase();
@@ -167,6 +170,7 @@ class JsFileDownloader {
 
       reader.onerror = reject;
 
+      // read first 4 bytes of sliced file as an array buffer
       reader.readAsArrayBuffer(first4BytesOfFile);
     });
   }
