@@ -224,7 +224,7 @@ class JsFileDownloader {
 
   getFile (response, fileName) {
     return this.getContentType(new Blob([response])).then(type => {
-      let file = null;
+      let file;
       let options = { type: type};
 
       try {
