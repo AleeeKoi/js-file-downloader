@@ -1,7 +1,7 @@
 declare module 'js-file-downloader' {
   export interface OptionalParams {
     timeout?: number;
-    headers?: [{ name: string, value: string }];
+    headers?: { name: string, value: string }[];
     forceDesktopMode?: boolean;
     withCredentials?: boolean;
     method?: 'GET' | 'POST';
