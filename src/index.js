@@ -147,25 +147,28 @@ class JsFileDownloader {
   }
 
   getContentTypeFromFileSignature (file) {
-    let signatures = Object.assign({}, fileSignatures, this.params.customFileSignatures);
+    const signatures = Object.assign({}, fileSignatures, this.params.customFileSignatures);
 
     return new Promise((resolve, reject) => {
-      let reader = new FileReader();
-      let first4BytesOfFile = file.slice(0, 4);
+      const reader = new FileReader();
+      const first4BytesOfFile = file.slice(0, 4);
 
       reader.onloadend = (evt) => {
-        if (evt.target.readyState === FileReader.DONE) {
-          // Since an array buffer is just a generic way to represent a binary buffer
-          // we need to create a TypedArray, in this case an Uint8Array
-          let uint = new Uint8Array(evt.target.result);
-          let bytes = [];
-          uint.forEach((byte) => {
-            // transform every byte to hexadecimal
-            bytes.push(byte.toString(16));
-          });
-          let hex = bytes.join('').toUpperCase();
-          resolve(signatures[hex]);
+        if (evt.target.readyState !== FileReader.DONE) {
+          return;
         }
+        // Since an array buffer is just a generic way to represent a binary buffer
+        // we need to create a TypedArray, in this case an Uint8Array
+        const uint = new Uint8Array(evt.target.result);
+        const bytes = [];
+
+        uint.forEach((byte) => {
+          // transform every byte to hexadecimal
+          bytes.push(byte.toString(16));
+        });
+
+        const hex = bytes.join('').toUpperCase();
+        resolve(signatures[hex]);
       };
 
       reader.onerror = reject;
@@ -180,22 +183,26 @@ class JsFileDownloader {
   }
 
   getContentType (file) {
-    return new Promise((resolve) => {
-      let defaultContentType = 'application/octet-stream';
+    return new Promise(async (resolve) => {
+      const { contentTypeDetermination } = this.params;
+      const defaultContentType = 'application/octet-stream';
+      let headerContentType;
+      let signatureContentType;
 
-      if (typeof this.params.contentTypeDetermination === 'string') {
-        if (this.params.contentTypeDetermination === 'header') {
-          resolve(this.getContentTypeFromResponseHeader() ?? defaultContentType);
-        } else if (this.params.contentTypeDetermination === 'signature') {
-          this.getContentTypeFromFileSignature(file)
-            .then(signatureContentType => resolve(signatureContentType ?? defaultContentType));
-        } else if (this.params.contentTypeDetermination === 'full') {
-          let headerContentType = this.getContentTypeFromResponseHeader();
-          this.getContentTypeFromFileSignature(file)
-            .then(signatureContentType => resolve((signatureContentType ?? headerContentType) ?? defaultContentType));
-        } else {
-          resolve(defaultContentType);
-        }
+      if (contentTypeDetermination === 'header' || contentTypeDetermination === 'full') {
+        headerContentType = this.getContentTypeFromResponseHeader();
+      }
+
+      if (contentTypeDetermination === 'signature' || contentTypeDetermination === 'full') {
+        signatureContentType = await this.getContentTypeFromFileSignature(file);
+      }
+
+      if (contentTypeDetermination === 'header') {
+        resolve(headerContentType ?? defaultContentType);
+      } else if (contentTypeDetermination === 'signature') {
+        resolve(signatureContentType ?? defaultContentType);
+      } else if (contentTypeDetermination === 'full') {
+        resolve(signatureContentType ?? headerContentType ?? defaultContentType);
       } else {
         resolve(defaultContentType);
       }
@@ -222,44 +229,43 @@ class JsFileDownloader {
     this.link.dispatchEvent(event);
   }
 
-  getFile (response, fileName) {
-    return this.getContentType(new Blob([response])).then(type => {
-      let file;
-      let options = { type: type};
+  async getFile (response, fileName) {
+    const type = await this.getContentType(new Blob([response]));
+    let file;
+    let options = { type: type };
 
-      try {
-        file = new File([response], fileName, options);
-      } catch (e) {
-        file = new Blob([response], options);
-        file.name = fileName;
-        file.lastModifiedDate = new Date();
-      }
-      return file;
-    });
+    try {
+      file = new File([response], fileName, options);
+    } catch (e) {
+      file = new Blob([response], options);
+      file.name = fileName;
+      file.lastModifiedDate = new Date();
+    }
+
+    return file;
   }
 
-  startDownload () {
-    let fileName = this.getFileName();
-    this.getFile(this.request.response, fileName).then(file => {
-      // native IE
-      if ('msSaveOrOpenBlob' in window.navigator) {
-        return window.navigator.msSaveOrOpenBlob(file, fileName);
-      }
+  async startDownload () {
+    const fileName = this.getFileName();
 
-      let objectUrl = window.URL.createObjectURL(file);
+    const file = await this.getFile(this.request.response, fileName);
 
-      this.link.href = objectUrl;
-      this.link.download = fileName;
-      this.clickLink();
+    // native IE
+    if ('msSaveOrOpenBlob' in window.navigator) {
+      return window.navigator.msSaveOrOpenBlob(file, fileName);
+    }
 
-      setTimeout(() => {
-        (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
-      }, 1000 * 40);
+    let objectUrl = window.URL.createObjectURL(file);
 
-      return file;
-    });
+    this.link.href = objectUrl;
+    this.link.download = fileName;
+    this.clickLink();
 
-    return this;
+    setTimeout(() => {
+      (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
+    }, 1000 * 40);
+
+    return file;
   }
 }
 
