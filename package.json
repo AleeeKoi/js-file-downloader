@@ -1,6 +1,6 @@
 {
   "name": "js-file-downloader",
-  "version": "1.1.23",
+  "version": "1.1.24",
   "description": "Small lib for a cool download experience",
   "main": "dist/js-file-downloader.js",
   "types": "index.d.ts",
@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
+    "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.15.0",
     "@babel/register": "^7.15.3",
     "babel-eslint": "^10.1.0",
