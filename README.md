@@ -60,7 +60,7 @@ Download this library from https://github.com/AleeeKoi/js-file-downloader/releas
 <script src="/path/to/js-file-downloader.min.js"></script>
 <script>
   // Then somewhere in your code
-  new jsFileDownloader({ url: 'https://github.alessandropellizzari.it/test/apedesign-bg.png' })
+  new jsFileDownloader({ url: 'https://cdn.apedesign.net/github/logo.png' })
     .then(function () {
       // Called when download ended
     })
