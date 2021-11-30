@@ -27,7 +27,7 @@ JS File Downloader supports all browsers that are [ES5-compliant] (http://kangax
 
 ### Installing with package manager
 
-With a package manager (**recomanded**): 
+With a package manager (**recommended**): 
 ```js
 npm install js-file-downloader --save 
 ```
