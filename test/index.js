@@ -175,3 +175,65 @@ describe('Rejection test', () => {
   });
 
 });
+
+describe('Determine content type by header test', () => {
+
+  let DownloaderPromise;
+
+  before(() => {
+    DownloaderPromise = new Downloader({
+      url: 'https://cdn.apedesign.net/github/logo.png',
+      contentTypeDetermination: 'header'
+    });
+  });
+
+  it('should not be rejected', done => {
+    DownloaderPromise
+      .then(async DL => {
+        let file = await DL.getFile();
+
+        done();
+
+        describe('Checking file', () => {
+
+          it('should have have correct mime type (image/png)', () => {
+            file.type.should.be.equal('image/png');
+          });
+
+        });
+      })
+      .catch(e => { done(e); });
+  });
+
+});
+
+describe('Determine content type by signature test', () => {
+
+  let DownloaderPromise;
+
+  before(() => {
+    DownloaderPromise = new Downloader({
+      url: 'https://cdn.apedesign.net/github/logo.png',
+      contentTypeDetermination: 'signature'
+    });
+  });
+
+  it('should not be rejected', done => {
+    DownloaderPromise
+      .then(async DL => {
+        let file = await DL.getFile();
+
+        done();
+
+        describe('Checking file', () => {
+
+          it('should have have correct mime type (image/png)', () => {
+            file.type.should.be.equal('image/png');
+          });
+
+        });
+      })
+      .catch(e => { done(e); });
+  });
+
+});
