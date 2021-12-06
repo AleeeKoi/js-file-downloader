@@ -23,6 +23,7 @@ declare module 'js-file-downloader' {
     params: Params;
     link: HTMLAnchorElement;
     request: XMLHttpRequest;
+    downloadedFile: null | Blob | File;
   }
   interface JsFileDownloaderContructor {
     new (data?: Params & { autoStart: false }): JsFileDownloaderBase;

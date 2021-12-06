@@ -37,6 +37,7 @@ class JsFileDownloader {
     this.params = Object.assign({}, DEFAULT_PARAMS, customParams);
     this.link = this.createLink();
     this.request = null;
+    this.downloadedFile = null;
 
     if (this.params.autoStart) return this.downloadFile();
 
@@ -73,11 +74,11 @@ class JsFileDownloader {
       return reject(new DownloadException('url param not defined!', this.request));
     }
 
-    this.request.onload = () => {
+    this.request.onload = async () => {
       if (parseInt(this.request.status, 10) !== 200) {
         return reject(new DownloadException(`status code [${this.request.status}]`, this.request));
       }
-      this.startDownload();
+      await this.startDownload();
       return resolve(this);
     };
 
@@ -183,7 +184,7 @@ class JsFileDownloader {
     return this.request.getResponseHeader('content-type');
   }
 
-  getContentType (file) {
+  getContentType (response) {
     return new Promise(async (resolve) => {
       const { contentTypeDetermination } = this.params;
       const defaultContentType = 'application/octet-stream';
@@ -195,7 +196,7 @@ class JsFileDownloader {
       }
 
       if (contentTypeDetermination === 'signature' || contentTypeDetermination === 'full') {
-        signatureContentType = await this.getContentTypeFromFileSignature(file);
+        signatureContentType = await this.getContentTypeFromFileSignature(new Blob([response]));
       }
 
       if (contentTypeDetermination === 'header') {
@@ -231,9 +232,9 @@ class JsFileDownloader {
   }
 
   async getFile (response, fileName) {
-    const type = await this.getContentType(new Blob([response]));
+    const type = await this.getContentType(response);
     let file;
-    let options = { type: type };
+    let options = { type };
 
     try {
       file = new File([response], fileName, options);
@@ -249,14 +250,14 @@ class JsFileDownloader {
   async startDownload () {
     const fileName = this.getFileName();
 
-    const file = await this.getFile(this.request.response, fileName);
+    this.downloadedFile = await this.getFile(this.request.response, fileName);
 
     // native IE
     if ('msSaveOrOpenBlob' in window.navigator) {
-      return window.navigator.msSaveOrOpenBlob(file, fileName);
+      return window.navigator.msSaveOrOpenBlob(this.downloadedFile, fileName);
     }
 
-    let objectUrl = window.URL.createObjectURL(file);
+    let objectUrl = window.URL.createObjectURL(this.downloadedFile);
 
     this.link.href = objectUrl;
     this.link.download = fileName;
@@ -266,8 +267,9 @@ class JsFileDownloader {
       (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
     }, 1000 * 40);
 
-    return file;
+    return this.downloadedFile;
   }
+
 }
 
 export default JsFileDownloader;
