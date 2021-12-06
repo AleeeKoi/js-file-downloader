@@ -155,6 +155,7 @@ class JsFileDownloader {
 
       reader.onloadend = (evt) => {
         if (evt.target.readyState !== FileReader.DONE) {
+          reject();
           return;
         }
         // Since an array buffer is just a generic way to represent a binary buffer
