@@ -10,6 +10,7 @@
 'use strict';
 
 import { DownloadException } from './exception';
+import {fileSignatures} from './signatures';
 
 const DEFAULT_PARAMS = {
   timeout: 40000,
@@ -21,7 +22,8 @@ const DEFAULT_PARAMS = {
   nameCallback: name => name,
   contentType: 'application/x-www-form-urlencoded',
   body: null,
-  nativeFallbackOnError: false
+  nativeFallbackOnError: false,
+  contentTypeDetermination: false
 };
 
 class JsFileDownloader {
@@ -35,6 +37,7 @@ class JsFileDownloader {
     this.params = Object.assign({}, DEFAULT_PARAMS, customParams);
     this.link = this.createLink();
     this.request = null;
+    this.downloadedFile = null;
 
     if (this.params.autoStart) return this.downloadFile();
 
@@ -71,11 +74,11 @@ class JsFileDownloader {
       return reject(new DownloadException('url param not defined!', this.request));
     }
 
-    this.request.onload = () => {
+    this.request.onload = async () => {
       if (parseInt(this.request.status, 10) !== 200) {
         return reject(new DownloadException(`status code [${this.request.status}]`, this.request));
       }
-      this.startDownload();
+      await this.startDownload();
       return resolve(this);
     };
 
@@ -144,6 +147,70 @@ class JsFileDownloader {
     return this.params.nameCallback(extractedName);
   }
 
+  getContentTypeFromFileSignature (file) {
+    const signatures = Object.assign({}, fileSignatures, this.params.customFileSignatures);
+
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      const first4BytesOfFile = file.slice(0, 4);
+
+      reader.onloadend = (evt) => {
+        if (evt.target.readyState !== FileReader.DONE) {
+          reject();
+          return;
+        }
+        // Since an array buffer is just a generic way to represent a binary buffer
+        // we need to create a TypedArray, in this case an Uint8Array
+        const uint = new Uint8Array(evt.target.result);
+        const bytes = [];
+
+        uint.forEach((byte) => {
+          // transform every byte to hexadecimal
+          bytes.push(byte.toString(16));
+        });
+
+        const hex = bytes.join('').toUpperCase();
+        resolve(signatures[hex]);
+      };
+
+      reader.onerror = reject;
+
+      // read first 4 bytes of sliced file as an array buffer
+      reader.readAsArrayBuffer(first4BytesOfFile);
+    });
+  }
+
+  getContentTypeFromResponseHeader () {
+    return this.request.getResponseHeader('content-type');
+  }
+
+  getContentType (response) {
+    return new Promise(async (resolve) => {
+      const { contentTypeDetermination } = this.params;
+      const defaultContentType = 'application/octet-stream';
+      let headerContentType;
+      let signatureContentType;
+
+      if (contentTypeDetermination === 'header' || contentTypeDetermination === 'full') {
+        headerContentType = this.getContentTypeFromResponseHeader();
+      }
+
+      if (contentTypeDetermination === 'signature' || contentTypeDetermination === 'full') {
+        signatureContentType = await this.getContentTypeFromFileSignature(new Blob([response]));
+      }
+
+      if (contentTypeDetermination === 'header') {
+        resolve(headerContentType ?? defaultContentType);
+      } else if (contentTypeDetermination === 'signature') {
+        resolve(signatureContentType ?? defaultContentType);
+      } else if (contentTypeDetermination === 'full') {
+        resolve(signatureContentType ?? headerContentType ?? defaultContentType);
+      } else {
+        resolve(defaultContentType);
+      }
+    });
+  }
+
   createLink () {
     let link = document.createElement('a');
 
@@ -164,9 +231,10 @@ class JsFileDownloader {
     this.link.dispatchEvent(event);
   }
 
-  getFile (response, fileName) {
-    let file = null;
-    let options = { type: 'application/octet-stream' };
+  async getFile (response, fileName) {
+    const type = await this.getContentType(response);
+    let file;
+    let options = { type };
 
     try {
       file = new File([response], fileName, options);
@@ -175,19 +243,21 @@ class JsFileDownloader {
       file.name = fileName;
       file.lastModifiedDate = new Date();
     }
+
     return file;
   }
 
-  startDownload () {
-    let fileName = this.getFileName();
-    let file = this.getFile(this.request.response, fileName);
+  async startDownload () {
+    const fileName = this.getFileName();
+
+    this.downloadedFile = await this.getFile(this.request.response, fileName);
 
     // native IE
     if ('msSaveOrOpenBlob' in window.navigator) {
-      return window.navigator.msSaveOrOpenBlob(file, fileName);
+      return window.navigator.msSaveOrOpenBlob(this.downloadedFile, fileName);
     }
 
-    let objectUrl = window.URL.createObjectURL(file);
+    let objectUrl = window.URL.createObjectURL(this.downloadedFile);
 
     this.link.href = objectUrl;
     this.link.download = fileName;
@@ -197,8 +267,9 @@ class JsFileDownloader {
       (window.URL || window.webkitURL || window).revokeObjectURL(objectUrl);
     }, 1000 * 40);
 
-    return this;
+    return this.downloadedFile;
   }
+
 }
 
 export default JsFileDownloader;

@@ -229,6 +229,40 @@ new JsFileDownloader({
   body: 'The body as a string'
 })
 ```
+
+#### contentTypeDetermination
+By setting this property the downloader will determine the content type automatically depending on the value.
+
+value | description
+--- | ---
+`"header"` | Gets type from `content-type` response header.
+`"signature"` | Analyzes the first 4 bytes of the returned file and will check if that signature exists in the predetermined dict (You can override/merge this dict with the `customFileSigantures` property).
+`"full"` | Uses both methods from above but prefers `"siganture"`.
+`false` | Type is not determined and the default is added, `application/octet-stream`.
+
+```js
+new JsFileDownloader({ 
+  url: '...',
+  contentTypeDetermination: 'header'
+})
+```
+
+#### customFileSignatures
+By setting this value you can override/merge the predefined signature dict (`src/signatures.js`). The key represents the hex code of a file (for more information [here](https://en.wikipedia.org/wiki/List_of_file_signatures)) and the value should be in the format of a content type (e.g. `application/pdf`). Setting this value has only an affect when `contentTypeDetermination` is set to `"full"` or `"signature"`.
+
+```js
+new JsFileDownloader({ 
+  url: '...',
+  contentTypeDetermination: 'full', // must be set to "full" or "signature"
+  customFileSignatures: {
+    'FFFB':'audio/mpeg',
+    'FFF3':'audio/mpeg',
+    'FFF2':'audio/mpeg',
+    '494433': 'audio/mpeg'
+  }
+})
+```
+
 ### License
 
 [MIT](http://opensource.org/licenses/MIT)

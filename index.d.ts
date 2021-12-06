@@ -13,6 +13,8 @@ declare module 'js-file-downloader' {
     body?: Document | BodyInit | null;
     nativeFallbackOnError?: boolean;
     onloadstart?: () => void;
+    contentTypeDetermination?: false | 'header' | 'signature' | 'full';
+    customFileSignatures?: { [key: string]: string };
   }
 
   type Params = OptionalParams & { url: string };
@@ -21,6 +23,7 @@ declare module 'js-file-downloader' {
     params: Params;
     link: HTMLAnchorElement;
     request: XMLHttpRequest;
+    downloadedFile: null | Blob | File;
   }
   interface JsFileDownloaderContructor {
     new (data?: Params & { autoStart: false }): JsFileDownloaderBase;

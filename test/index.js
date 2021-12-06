@@ -1,5 +1,8 @@
 import chai from 'chai';
 import Downloader from '../dist/js-file-downloader.min';
+import FileReaderMock from './FileReaderMock';
+
+global.FileReader = FileReaderMock;
 
 const expect = chai.expect;
 chai.should();
@@ -172,6 +175,66 @@ describe('Rejection test', () => {
 
         done();
       });
+  });
+
+});
+
+describe('Determine content type by header test', () => {
+
+  let DownloaderPromise;
+
+  before(() => {
+    DownloaderPromise = new Downloader({
+      url: 'https://cdn.apedesign.net/github/logo',
+      contentTypeDetermination: 'header'
+    });
+  });
+
+  it('should not be rejected', done => {
+    DownloaderPromise
+      .then(({ downloadedFile }) => {
+
+        done();
+
+        describe('Checking file', () => {
+
+          it('should have have correct mime type (image/png)', () => {
+            downloadedFile.type.should.be.equal('image/png');
+          });
+
+        });
+      })
+      .catch(e => { done(e); });
+  });
+
+});
+
+describe('Determine content type by signature test', () => {
+
+  let DownloaderPromise;
+
+  before(() => {
+    DownloaderPromise = new Downloader({
+      url: 'https://cdn.apedesign.net/github/logo',
+      contentTypeDetermination: 'signature'
+    });
+  });
+
+  it('should not be rejected', done => {
+    DownloaderPromise
+      .then(({ downloadedFile }) => {
+
+        done();
+
+        describe('Checking file', () => {
+
+          it('should have have correct mime type (image/png)', () => {
+            downloadedFile.type.should.be.equal('image/png');
+          });
+
+        });
+      })
+      .catch(e => { done(e); });
   });
 
 });
