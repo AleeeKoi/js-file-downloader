@@ -9,7 +9,7 @@ const toArrayBuffer = (bufer) => {
     view[i] = bufer[i];
   }
   return arrayBuffer;
-}
+};
 
 class FileReaderMock {
 
