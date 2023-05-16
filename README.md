@@ -19,6 +19,26 @@
 
 JS File Downloader is a simple no dependency library you will be able to download file from browser and show downloading status.
 
+  - [Install](#installing-with-package-manager)
+  - [Basic usage](#basic-usage)
+  - [Options](#options)
+    - [process, check download status](#process-for-checking-download-status)
+    - [onloadstart](#onloadstart-loadstart-event-listener)
+    - [headers](#headers-of-request)
+    - [filename](#filename)
+    - [timeout](#timeout)
+    - [autoStart](#autostart)
+    - [forceDesktopMode](#forcedesktopmode)
+    - [withCredentials](#withcredentials)
+    - [method, GET/POST/...](#method)
+    - [nameCallback, custom at runtime](#namecallback)
+    - [contentType](#contenttype)
+    - [nativeFallbackOnError](#nativefallbackonerror)
+    - [body, of the request](#body)
+    - [contentTypeDetermination](#contenttypedetermination)
+    - [customFileSignatures](#customfilesignatures)
+  - [abort, to stop pending downloading request](#abort)
+
 ### Browser Compatibility
 
 JS File Downloader supports all browsers that are [ES5-compliant] (http://kangax.github.io/compat-table/es5/) (IE8 and below are not supported).
@@ -71,7 +91,6 @@ Download this library from https://github.com/AleeeKoi/js-file-downloader/releas
 ```
 
 ---
-
 
 ### Options:
 
@@ -262,6 +281,25 @@ new JsFileDownloader({
   }
 })
 ```
+___
+### Abort:
+Setting `autoStart` option to `false` the process can be aborted calling the related method `abort`. The download promise is rejected, the reason can be customized passing is as the 1st param of the abort function.
+
+```js
+const download = new JsFileDownloader({ 
+  url: '...',
+  autoStart: false
+});
+
+download.start()
+  .catch(function(reason){
+      // handle errors
+  });
+
+download.abort(/** reason */);
+
+```
+___
 
 ### License
 

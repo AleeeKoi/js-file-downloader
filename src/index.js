@@ -38,6 +38,7 @@ class JsFileDownloader {
     this.link = this.createLink();
     this.request = null;
     this.downloadedFile = null;
+    this.abortController = undefined;
 
     if (this.params.autoStart) return this.downloadFile();
 
@@ -48,10 +49,25 @@ class JsFileDownloader {
     return this.downloadFile();
   }
 
+  abort (reason) {
+    if (!this.abortController) { return; }
+    this.abortController.abort(reason || 'Download cancelled');
+  }
+
   downloadFile () {
     return new Promise((resolve, reject) => {
       this.initDownload(resolve, reject);
     });
+  }
+
+  setAbortListner (abortListener) {
+    if (!this.abortController) { return; }
+    this.abortController.signal.addEventListener('abort', abortListener);
+  }
+
+  unsetAbortListner (abortListener) {
+    if (!this.abortController) { return; }
+    this.abortController.signal.removeEventListener('abort', abortListener);
   }
 
   initDownload (resolve, reject) {
@@ -70,11 +86,22 @@ class JsFileDownloader {
 
     this.request = this.createRequest();
 
+    this.abortController = 'AbortController' in window ? new AbortController() : null;
+
+    const abortListener = ({target}) => {
+      this.unsetAbortListner(abortListener);
+      !!this.request && this.request.abort();
+      reject(target.reason);
+    };
+
+    this.setAbortListner(abortListener);
+
     if (!this.params.url) {
       return reject(new DownloadException('url param not defined!', this.request));
     }
 
     this.request.onload = async () => {
+      this.unsetAbortListner(abortListener);
       if (parseInt(this.request.status, 10) !== 200) {
         return reject(new DownloadException(`status code [${this.request.status}]`, this.request));
       }
@@ -83,10 +110,12 @@ class JsFileDownloader {
     };
 
     this.request.ontimeout = () => {
+      this.unsetAbortListner(abortListener);
       reject(new DownloadException('request timeout', this.request));
     };
 
     this.request.onerror = () => {
+      this.unsetAbortListner(abortListener);
       if (this.params.nativeFallbackOnError) {
         fallback();
         resolve(this);

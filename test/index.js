@@ -238,3 +238,36 @@ describe('Determine content type by signature test', () => {
   });
 
 });
+
+describe('Shoud abort', () => {
+
+  let instance;
+
+  before(() => {
+    instance = new Downloader({
+      url: 'https://cdn.apedesign.net/github/logo.png',
+      autoStart: false
+    });
+  });
+
+  it('should be rejected', done => {
+    const promise = instance.start()
+      .catch(e => {
+
+        describe('Checking exception', () => {
+
+          it('should be and exception', () => {
+            e.should.be.equal('Download cancelled');
+          });
+        });
+
+        done();
+      });
+
+    instance.abort();
+
+    promise
+      .catch(e => { done(e); });
+  });
+
+});
